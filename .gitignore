@@ -1,0 +1,4 @@
+*.json
+!WingHexPy.json
+**/*.pro.user
+push.sh
