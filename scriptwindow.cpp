@@ -4,6 +4,7 @@
 #include "QCodeEditor/QPythonHighlighter.hpp"
 #include <DTitlebar>
 #include <DWidgetUtil>
+#include <Python.h>
 #include <QVBoxLayout>
 
 ScriptWindow *ScriptWindow::m_instance = nullptr;

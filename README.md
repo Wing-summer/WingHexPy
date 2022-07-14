@@ -1,7 +1,7 @@
 <h1 align="center"> WingSummer.WingHexPy</h1>
 
 <p align="center">
-<img alt="WingHexPy" src="/img/icon.png">
+<img alt="WingHexPy" src="img/icon.png">
 <p align="center">WingHexPy</p>
 </p>
 

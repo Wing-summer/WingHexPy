@@ -216,6 +216,9 @@ bool PlgInterface::RunPyFile(QString filename) {
   } else {
     return false;
   }
+
+  if (plg->hasControl())
+    plg->requestRelease();
   return res;
 }
 
@@ -256,6 +259,8 @@ bool PlgInterface::RunPyText(QString content) {
   } else {
     return false;
   }
+  if (plg->hasControl())
+    plg->requestRelease();
   return res;
 }
 
@@ -1231,10 +1236,10 @@ PyObject *PlgInterface::toast(PyObject *self, PyObject *args) {
   Q_UNUSED(self);
   char *icon = nullptr, *message = nullptr;
   if (PyArg_ParseTuple(args, "ss", &icon, &message) && message) {
-    if (icon) {
+    if (icon && strlen(icon)) {
       plg->controller.toast(QIcon(icon), message);
     } else {
-      plg->controller.toast(QIcon(), message);
+      plg->controller.toast(QIcon(":/img/pys.png"), message);
     }
   }
   Py_RETURN_NONE;
