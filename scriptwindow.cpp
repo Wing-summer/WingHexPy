@@ -1,11 +1,13 @@
 #include "scriptwindow.h"
 #include "../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
 #include "QCodeEditor/QPythonHighlighter.hpp"
+#include "aboutsoftwaredialog.h"
 #include "plginterface.h"
+#include "sponsordialog.h"
+#include <DFileDialog>
 #include <DTitlebar>
 #include <DWidgetUtil>
 #include <Python.h>
-#include <QVBoxLayout>
 
 #define ICONRES(name) QIcon(":/img/" name ".png")
 
@@ -19,7 +21,7 @@ ScriptWindow *ScriptWindow::instance() {
 }
 
 ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
-  setMinimumSize(QSize(600, 500));
+  setMinimumSize(QSize(800, 600));
 
   auto _title = titlebar();
   auto picon = ICONRES("pys");
@@ -28,7 +30,7 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
   _title->setTitle(tr("WingHexPyScriptWindow"));
   auto w = new QWidget(this);
   setCentralWidget(w);
-  auto vlayout = new QVBoxLayout(w);
+  vlayout = new QVBoxLayout(w);
 
   m_styles[0] = QSyntaxStyle::defaultStyle();
   auto darkstyle = new QSyntaxStyle(this);
@@ -94,6 +96,29 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
                                   ScriptWindow::on_copy);
       PluginMenuAddItemIconAction(m, tr("Paste"), ICONRES("paste"),
                                   ScriptWindow::on_paste);
+      m->addSeparator();
+      PluginMenuAddItemIconAction(m, tr("Find"), ICONRES("find"),
+                                  ScriptWindow::on_find);
+      PluginMenuAddItemIconAction(m, tr("Replace"), ICONRES("replace"),
+                                  ScriptWindow::on_replace);
+    }
+    PluginMenuInitEnd();
+    menu->addMenu(m);
+    PluginMenuInitBegin(m, tr("Script")) {
+      m->setIcon(ICONRES("icon"));
+      PluginMenuAddItemIconAction(m, tr("Run"), ICONRES("run"),
+                                  ScriptWindow::on_run);
+      PluginMenuAddItemIconAction(m, tr("RunFile"), ICONRES("runf"),
+                                  ScriptWindow::on_runfile);
+    }
+    PluginMenuInitEnd();
+    menu->addMenu(m);
+    PluginMenuInitBegin(m, tr("About")) {
+      m->setIcon(ICONRES("author"));
+      PluginMenuAddItemIconAction(m, tr("AboutPlugin"), ICONRES("soft"),
+                                  ScriptWindow::on_about);
+      PluginMenuAddItemIconAction(m, tr("Sponsor"), ICONRES("sponsor"),
+                                  ScriptWindow::on_sponsor);
     }
     PluginMenuInitEnd();
     menu->addMenu(m);
@@ -127,11 +152,23 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
                            tr("Cut"));
     PluginToolBarAddAction(toolbar, ICONRES("copy"), ScriptWindow::on_copy,
                            tr("Copy"));
-    PluginToolBarAddAction(toolbar, ICONRES("paste"), ScriptWindow::on_saveas,
+    PluginToolBarAddAction(toolbar, ICONRES("paste"), ScriptWindow::on_paste,
                            tr("Paste"));
+    toolbar->addSeparator();
+    PluginToolBarAddAction(toolbar, ICONRES("find"), ScriptWindow::on_find,
+                           tr("Find"));
+    PluginToolBarAddAction(toolbar, ICONRES("replace"),
+                           ScriptWindow::on_replace, tr("Replace"));
     toolbar->addSeparator();
     PluginToolBarAddAction(toolbar, ICONRES("run"), ScriptWindow::on_run,
                            tr("Run"));
+    PluginToolBarAddAction(toolbar, ICONRES("runf"), ScriptWindow::on_runfile,
+                           tr("RunFile"));
+    toolbar->addSeparator();
+    PluginToolBarAddAction(toolbar, ICONRES("soft"), ScriptWindow::on_about,
+                           tr("AboutPlugin"));
+    PluginToolBarAddAction(toolbar, ICONRES("sponsor"),
+                           ScriptWindow::on_sponsor, tr("Sponsor"));
   }
   PluginToolBarInitEnd();
 
@@ -149,6 +186,13 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
     mredo->setEnabled(b);
   });
 
+  findbar = new FindBar(this);
+  vlayout->addWidget(findbar);
+  replacebar = new ReplaceBar(this);
+  vlayout->addWidget(replacebar);
+
+  connect(editor, &QCodeEditor::textChanged, this, [=] { isSaved = false; });
+
   Dtk::Widget::moveToCenter(this);
 }
 
@@ -160,7 +204,12 @@ void ScriptWindow::setTheme(DGuiApplicationHelper::ColorType theme) {
   }
 }
 
-void ScriptWindow::on_new() {}
+void ScriptWindow::on_new() {
+  if (!isSaved) {
+    return;
+  }
+  editor->clear();
+}
 
 void ScriptWindow::on_open() {}
 
@@ -181,6 +230,35 @@ void ScriptWindow::on_cut() { editor->cut(); }
 void ScriptWindow::on_paste() { editor->paste(); }
 
 void ScriptWindow::on_run() {
-  auto inst = PlgInterface::instance();
-  inst->RunPyText(editor->toPlainText());
+  PlgInterface::instance()->RunPyText(editor->toPlainText());
+}
+
+void ScriptWindow::on_runfile() {
+  auto filename = DFileDialog::getOpenFileName(this, tr("ChoosePyScript"),
+                                               QString(), "Python (*.py)");
+  if (filename.isEmpty())
+    return;
+  PlgInterface::instance()->RunPyFile(filename);
+}
+
+void ScriptWindow::on_find() {
+  replacebar->close();
+  auto cur = editor->textCursor();
+  findbar->activeInput("", "", cur.blockNumber(), cur.positionInBlock(), 0);
+}
+
+void ScriptWindow::on_replace() {
+  findbar->close();
+  auto cur = editor->textCursor();
+  replacebar->activeInput("", "", cur.blockNumber(), cur.positionInBlock(), 0);
+}
+
+void ScriptWindow::on_about() {
+  AboutSoftwareDialog d;
+  d.exec();
+}
+
+void ScriptWindow::on_sponsor() {
+  SponsorDialog d;
+  d.exec();
 }

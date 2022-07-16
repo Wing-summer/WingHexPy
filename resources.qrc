@@ -25,5 +25,10 @@
         <file>img/close.png</file>
         <file>img/edit.png</file>
         <file>img/run.png</file>
+        <file>img/runf.png</file>
+        <file>img/find.png</file>
+        <file>img/replace.png</file>
+        <file>sponsor.png</file>
+        <file>img/README.md</file>
     </qresource>
 </RCC>

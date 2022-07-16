@@ -3,11 +3,14 @@
 
 #include "QCodeEditor/QCodeEditor.hpp"
 #include "QCodeEditor/QSyntaxStyle.hpp"
+#include "findbar.h"
 #include "recentfilemanager.h"
+#include "replacebar.h"
 #include <DGuiApplicationHelper>
 #include <DMainWindow>
 #include <DStatusBar>
 #include <DToolBar>
+#include <QVBoxLayout>
 
 DWIDGET_USE_NAMESPACE
 
@@ -34,7 +37,12 @@ private:
   void on_cut();
   void on_paste();
   void on_run();
+  void on_runfile();
   void on_close();
+  void on_sponsor();
+  void on_about();
+  void on_find();
+  void on_replace();
 
 private:
   QCodeEditor *editor;
@@ -46,6 +54,12 @@ private:
   QAction *mundo, *mredo;
   DMenu *menu;
   RecentFileManager *recentmanager;
+  QVBoxLayout *vlayout;
+  FindBar *findbar;
+  ReplaceBar *replacebar;
+
+private:
+  bool isSaved = true;
 };
 
 #endif // SCRIPTWINDOW_H

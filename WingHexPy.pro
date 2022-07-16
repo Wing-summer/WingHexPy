@@ -35,7 +35,12 @@ SOURCES += \
     QCodeEditor/QLanguage.cpp \
     scriptwindow.cpp \
     recentfilemanager.cpp \
-    PythonQt/gui/PythonQtScriptingConsole.cpp
+    PythonQt/gui/PythonQtScriptingConsole.cpp \
+    findbar.cpp \
+    linebar.cpp \
+    replacebar.cpp \
+    aboutsoftwaredialog.cpp \
+    sponsordialog.cpp
 
 HEADERS += \
     winghexpy.h \
@@ -78,7 +83,12 @@ HEADERS += \
     PythonQt/PythonQtSystem.h \
     PythonQt/PythonQtUtils.h \
     PythonQt/PythonQtVariants.h \
-    PythonQt/gui/PythonQtScriptingConsole.h
+    PythonQt/gui/PythonQtScriptingConsole.h \
+    findbar.h \
+    linebar.h \
+    replacebar.h \
+    aboutsoftwaredialog.h \
+    sponsordialog.h
 
 DISTFILES += WingHexPy.json 
 
