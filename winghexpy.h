@@ -2,6 +2,7 @@
 #define GENERICPLUGIN_H
 
 #include "../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
+#include "PythonQt/gui/PythonQtScriptingConsole.h"
 #include "plginterface.h"
 #include <Python.h>
 #include <QTextBrowser>
@@ -36,16 +37,15 @@ public:
   void log(QString message);
 
 public:
-  bool RunPyFile(QString filename);
-  bool RunPyText(QString content);
+  void RunPyFile(QString filename);
+  void RunPyText(QString content);
 
 private:
   PlgInterface *plgint;
   QMenu *menu;
   QToolBar *tb;
   QDockWidget *dw;
-
-  QTextBrowser *txt;
+  PythonQtScriptingConsole *txt;
 };
 
 #endif // GENERICPLUGIN_H

@@ -3,6 +3,7 @@
 
 #include "QCodeEditor/QCodeEditor.hpp"
 #include "QCodeEditor/QSyntaxStyle.hpp"
+#include "recentfilemanager.h"
 #include <DGuiApplicationHelper>
 #include <DMainWindow>
 #include <DStatusBar>
@@ -19,13 +20,32 @@ public:
 private:
   void setTheme(DGuiApplicationHelper::ColorType theme);
 
+public:
+  bool openFile(QString filename, bool readonly = false);
+
+private:
+  void on_new();
+  void on_open();
+  void on_save();
+  void on_saveas();
+  void on_undo();
+  void on_redo();
+  void on_copy();
+  void on_cut();
+  void on_paste();
+  void on_run();
+  void on_close();
+
 private:
   QCodeEditor *editor;
   static ScriptWindow *m_instance;
   QSyntaxStyle *m_styles[2];
   DToolBar *toolbar;
   DStatusBar *status;
+  QAction *aundo, *aredo;
+  QAction *mundo, *mredo;
   DMenu *menu;
+  RecentFileManager *recentmanager;
 };
 
 #endif // SCRIPTWINDOW_H

@@ -4,5 +4,26 @@
         <file alias="default_style.xml">QCodeEditor/default_style.xml</file>
         <file>img/pys.png</file>
         <file alias="drakula.xml">QCodeEditor/drakula.xml</file>
+        <file>img/icon.png</file>
+        <file>img/author.jpg</file>
+        <file>img/author.png</file>
+        <file>img/copy.png</file>
+        <file>img/cut.png</file>
+        <file>img/del.png</file>
+        <file>img/file.png</file>
+        <file>img/jmp.png</file>
+        <file>img/new.png</file>
+        <file>img/open.png</file>
+        <file>img/paste.png</file>
+        <file>img/redo.png</file>
+        <file>img/save.png</file>
+        <file>img/saveas.png</file>
+        <file>img/soft.png</file>
+        <file>img/sponsor.png</file>
+        <file>img/undo.png</file>
+        <file>img/clearhis.png</file>
+        <file>img/close.png</file>
+        <file>img/edit.png</file>
+        <file>img/run.png</file>
     </qresource>
 </RCC>

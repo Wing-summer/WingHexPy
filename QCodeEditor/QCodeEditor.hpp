@@ -4,6 +4,8 @@
 // Qt
 #include <QTextEdit> // Required for inheritance
 
+#include "PythonQt/PythonQt.h"
+
 class QCompleter;
 class QLineNumberArea;
 class QSyntaxStyle;
@@ -93,18 +95,6 @@ public:
    * Default: true
    */
   bool autoIndentation() const;
-
-  /**
-   * @brief Method for setting completer.
-   * @param completer Pointer to completer object.
-   */
-  void setCompleter(QCompleter *completer);
-
-  /**
-   * @brief Method for getting completer.
-   * @return Pointer to completer.
-   */
-  QCompleter *completer() const;
 
 public Q_SLOTS:
 
@@ -224,6 +214,8 @@ private:
   bool proceedCompleterBegin(QKeyEvent *e);
   void proceedCompleterEnd(QKeyEvent *e);
 
+  void handleTabCompletion(); // added by wingsummer from PythonQt
+
   /**
    * @brief Method for getting character under
    * cursor.
@@ -268,6 +260,9 @@ private:
   bool m_autoParentheses;
   bool m_replaceTab;
   QString m_tabReplace;
+
+  PythonQt *py;
+  PythonQtObjectPtr _context;
 };
 
 #endif

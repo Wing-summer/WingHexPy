@@ -34,7 +34,7 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
   }
   PluginMenuInitEnd();
 
-  txt = new QTextBrowser;
+  txt = plgint->getScriptingConsole();
   PluginDockWidgetInit(dw, txt, tr("WingHexPyConsole"), "WingHexPyConsole");
 
   PluginToolBarInitBegin(tb, "WingHexPy") {
@@ -47,15 +47,11 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
   return true;
 }
 
-bool WingHexPy::RunPyFile(QString filename) {
-  return plgint->RunPyFile(filename);
-}
+void WingHexPy::RunPyFile(QString filename) { plgint->RunPyFile(filename); }
 
-bool WingHexPy::RunPyText(QString content) {
-  return plgint->RunPyText(content);
-}
+void WingHexPy::RunPyText(QString content) { plgint->RunPyText(content); }
 
-void WingHexPy::unload() { Py_Finalize(); }
+void WingHexPy::unload() {}
 
 void WingHexPy::plugin2MessagePipe(WingPluginMessage type,
                                    QList<QVariant> msg) {
@@ -83,4 +79,4 @@ QDockWidget *WingHexPy::registerDockWidget() { return dw; }
 
 QToolBar *WingHexPy::registerToolBar() { return tb; }
 
-void WingHexPy::log(QString message) { txt->insertHtml(message); }
+void WingHexPy::log(QString message) { txt->consoleMessage(message); }

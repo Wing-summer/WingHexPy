@@ -29,12 +29,13 @@ SOURCES += \
     QCodeEditor/QCodeEditor.cpp \
     QCodeEditor/QFramedTextAttribute.cpp \
     QCodeEditor/QLineNumberArea.cpp \
-    QCodeEditor/QPythonCompleter.cpp \
     QCodeEditor/QPythonHighlighter.cpp \
     QCodeEditor/QStyleSyntaxHighlighter.cpp \
     QCodeEditor/QSyntaxStyle.cpp \
     QCodeEditor/QLanguage.cpp \
-    scriptwindow.cpp
+    scriptwindow.cpp \
+    recentfilemanager.cpp \
+    PythonQt/gui/PythonQtScriptingConsole.cpp
 
 HEADERS += \
     winghexpy.h \
@@ -43,24 +44,53 @@ HEADERS += \
     QCodeEditor/QCodeEditor.hpp \
     QCodeEditor/QFramedTextAttribute.hpp \
     QCodeEditor/QLineNumberArea.hpp \
-    QCodeEditor/QPythonCompleter.hpp \
     QCodeEditor/QPythonHighlighter.hpp \
     QCodeEditor/QStyleSyntaxHighlighter.hpp \
     QCodeEditor/QSyntaxStyle.hpp \
     QCodeEditor/QHighlightBlockRule.hpp \
     QCodeEditor/QHighlightRule.hpp \
     QCodeEditor/QLanguage.hpp \
-    scriptwindow.h
+    scriptwindow.h \
+    recentfilemanager.h \
+    PythonQt/PythonQt.h \
+    PythonQt/PythonQtBoolResult.h \
+    PythonQt/PythonQtClassInfo.h \
+    PythonQt/PythonQtClassWrapper.h \
+    PythonQt/PythonQtConversion.h \
+    PythonQt/PythonQtCppWrapperFactory.h \
+    PythonQt/PythonQtDoc.h \
+    PythonQt/PythonQtImporter.h \
+    PythonQt/PythonQtImportFileInterface.h \
+    PythonQt/PythonQtInstanceWrapper.h \
+    PythonQt/PythonQtMethodInfo.h \
+    PythonQt/PythonQtMisc.h \
+    PythonQt/PythonQtObjectPtr.h \
+    PythonQt/PythonQtProperty.h \
+    PythonQt/PythonQtPythonInclude.h \
+    PythonQt/PythonQtQFileImporter.h \
+    PythonQt/PythonQtSignal.h \
+    PythonQt/PythonQtSignalReceiver.h \
+    PythonQt/PythonQtSlot.h \
+    PythonQt/PythonQtSlotDecorator.h \
+    PythonQt/PythonQtStdDecorators.h \
+    PythonQt/PythonQtStdIn.h \
+    PythonQt/PythonQtStdOut.h \
+    PythonQt/PythonQtSystem.h \
+    PythonQt/PythonQtUtils.h \
+    PythonQt/PythonQtVariants.h \
+    PythonQt/gui/PythonQtScriptingConsole.h
 
 DISTFILES += WingHexPy.json 
 
 TRANSLATIONS += \
     $$PWD/WingHexPy.ts
 
-INCLUDEPATH += -I /usr/include/python3.7
-LIBS += /usr/lib/x86_64-linux-gnu/libpython3.7m.so.1
+LIBS += $$PWD/PythonQt/libPythonQt-Qt5-Python3.7.a
 
-FORMS +=
+DEFINES += PYTHONQT_CATCH_ALL_EXCEPTIONS
+
+LIBS += /usr/lib/x86_64-linux-gnu/libpython3.7m.so.1
+INCLUDEPATH += -I /usr/include/python3.7
 
 RESOURCES += \
     resources.qrc

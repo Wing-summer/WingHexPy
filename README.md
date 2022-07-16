@@ -6,9 +6,8 @@
 </p>
 
 <p align="center">
-<img alt="作者" src="authorband.svg">
-<img alt="开源协议" src="olband.svg">
-<img alt="商用协议" src="clband.svg">
+<img alt="作者" src="https://img.shields.io/badge/Author-Wingsummer-green">
+<img alt="开源协议" src="https://img.shields.io/badge/License-AGPL--3.0-red">
 </p>
 
 - 开源不易，给个 Star 或者 [捐助](#捐助) 吧
@@ -38,9 +37,7 @@
 
 ### 协议
 
-&emsp;&emsp;本软件如果用于非商业用途，采用`WingSummer OpenSource Lincense`协议，对应的协议内容在仓库`OpenSource-LICENSE`文件。 **没有我的任何授权，不得将该软件用于任何形式的商业用途，包括我改良的部分，除非你直接使用原组件，不限于商业二次开发、换 UI 套壳、二手转卖等，我不允许任何人随意把我当作免费劳动力作为赚钱的工具！** 我的初衷是让 Linux 的生态更加完整，早日让祖国推动操作系统国产化。我不希望“吸血鬼”们利益归自己，脏活累活给开源，都那么理所当然，开源就是这么被败坏的。我不希望因为版权的事情牵扯了大量的精力。
-
-&emsp;&emsp;如果你想将本软件或者本软件的部分代码用于商业用途，必须亲自咨询我，商讨商业授权相关事宜。如果得到授权则采用`WingSummer Commerical License`协议，也就是本仓库的`Commerical-LICENSE`文件的内容。
+&emsp;&emsp;本插件仓库将采用`AGPL-3.0`协议，不得将该插件代码用于改协议之外的用途。
 
 ### issue 前必读
 
@@ -54,7 +51,7 @@
 
 ### 有关 QCodeEditor
 
-&emsp;&emsp;本软件自带的编写脚本编辑器基于`QCodeEditor`，我对该软件进行的删减和修改以适配该插件的功能。如下是原仓库的必要说明，详情请点击 [此链接](https://github.com/Megaxela/QCodeEditor) ：
+&emsp;&emsp;本软件自带的编写脚本编辑器基于`QCodeEditor`，我对该软件进行的删减和修改增强以适配该插件的功能。如下是原仓库的部分说明，详情请点击 [此链接](https://github.com/Megaxela/QCodeEditor) ：
 
 ---
 
@@ -109,6 +106,24 @@ SOFTWARE.
 
 ---
 
+### 有关 PythonQt
+
+&emsp;&emsp;所有的 QT C++ 代码与 Python 脚本进行交互基础支持库，如果没有该框架，就不会有该插件的出现。该库遵守`LGPL`协议，如下是原仓库的部分说明，详情请点击 [此链接](https://github.com/MeVisLab/pythonqt) ：
+
+---
+
+PythonQt is a dynamic Python binding for Qt. It offers an easy way to embed the Python scripting language into your Qt applications.
+
+Documentation
+API documentation is available at: https://mevislab.github.io/pythonqt
+
+Licensing
+PythonQt is distributed under the LGPL 2.1 license.
+
+---
+
+&emsp;&emsp;鉴于 Linux 的动态库调用没有 Windows 方便之处，所以我使用了静态链接，按照协议必须开源修改后的代码。我把该库的`PythonQtScriptingConsole`单独出来进行编译，所有修改的代码都在头文件（减少警告）和代码文件`PythonQtScriptingConsole.hpp`和`PythonQtScriptingConsole.cpp`中。也就是说，所有的修改部分均在我的仓库文件当中。
+
 ## 效果图
 
 <p align="center">
@@ -135,4 +150,10 @@ SOFTWARE.
 
 ## 有关仓库
 
+* GitLink ： https://www.gitlink.org.cn/wingsummer/WingHexPy
+* Gitea ： https://code.gitlink.org.cn/wingsummer/WingHexPy
+* Gitee ： https://gitee.com/wingsummer/wing-hex-py
+
 ## WIKI
+
+> 插件完成后建设

@@ -19,20 +19,27 @@
 #include <QTextBlock>
 #include <QTextCharFormat>
 
+// PythonQt
+#include <QStringListModel>
+
 static QVector<QPair<QString, QString>> parentheses = {
     {"(", ")"}, {"{", "}"}, {"[", "]"}, {"\"", "\""}, {"'", "'"}};
 
 QCodeEditor::QCodeEditor(QWidget *widget)
     : QTextEdit(widget), m_highlighter(nullptr), m_syntaxStyle(nullptr),
-      m_lineNumberArea(new QLineNumberArea(this)), m_completer(nullptr),
+      m_lineNumberArea(new QLineNumberArea(this)),
+      m_completer(new QCompleter(this)),
       m_framedAttribute(new QFramedTextAttribute(this)),
       m_autoIndentation(true), m_autoParentheses(true), m_replaceTab(true),
       m_tabReplace(QString(4, ' ')) {
   initDocumentLayoutHandlers();
   initFont();
   performConnections();
-
   setSyntaxStyle(QSyntaxStyle::defaultStyle());
+  py = PythonQt::self();
+  _context = py->getMainModule();
+  connect(m_completer, QOverload<const QString &>::of(&QCompleter::activated),
+          this, &QCodeEditor::insertCompletion);
 }
 
 void QCodeEditor::initDocumentLayoutHandlers() {
@@ -318,7 +325,16 @@ bool QCodeEditor::proceedCompleterBegin(QKeyEvent *e) {
   if (m_completer && m_completer->popup()->isVisible()) {
     switch (e->key()) {
     case Qt::Key_Enter:
-    case Qt::Key_Return:
+    case Qt::Key_Return: { // added by wingsummer
+      if (!m_completer->popup()->currentIndex().isValid()) {
+        insertCompletion(m_completer->currentCompletion());
+        m_completer->popup()->hide();
+        e->accept();
+      }
+      e->ignore();
+      return true;
+      break;
+    }
     case Qt::Key_Escape:
     case Qt::Key_Tab:
     case Qt::Key_Backtab:
@@ -356,18 +372,18 @@ void QCodeEditor::proceedCompleterEnd(QKeyEvent *e) {
     return;
   }
 
-  if (completionPrefix != m_completer->completionPrefix()) {
-    m_completer->setCompletionPrefix(completionPrefix);
-    m_completer->popup()->setCurrentIndex(
-        m_completer->completionModel()->index(0, 0));
-  }
+  //  if (completionPrefix != m_completer->completionPrefix()) {
+  //    m_completer->setCompletionPrefix(completionPrefix);
+  //    m_completer->popup()->setCurrentIndex(
+  //        m_completer->completionModel()->index(0, 0));
+  //  }
 
-  auto cursRect = cursorRect();
-  cursRect.setWidth(
-      m_completer->popup()->sizeHintForColumn(0) +
-      m_completer->popup()->verticalScrollBar()->sizeHint().width());
+  //  auto cursRect = cursorRect();
+  //  cursRect.setWidth(
+  //      m_completer->popup()->sizeHintForColumn(0) +
+  //      m_completer->popup()->verticalScrollBar()->sizeHint().width());
 
-  m_completer->complete(cursRect);
+  handleTabCompletion();
 }
 
 void QCodeEditor::keyPressEvent(QKeyEvent *e) {
@@ -478,6 +494,65 @@ void QCodeEditor::keyPressEvent(QKeyEvent *e) {
   proceedCompleterEnd(e);
 }
 
+void QCodeEditor::handleTabCompletion() {
+  QTextCursor textCursor = this->textCursor();
+  int pos = textCursor.position();
+  textCursor.movePosition(QTextCursor::StartOfLine);
+  textCursor.movePosition(QTextCursor::EndOfLine, QTextCursor::KeepAnchor);
+  int startPos = textCursor.selectionStart();
+
+  int offset = pos - startPos;
+  QString text = textCursor.selectedText();
+
+  QString textToComplete;
+  int cur = offset;
+  while (cur--) {
+    QChar c = text.at(cur);
+    if (c.isLetterOrNumber() || c == '.' || c == '_') {
+      textToComplete.prepend(c);
+    } else {
+      break;
+    }
+  }
+
+  QString lookup;
+  QString compareText = textToComplete;
+  int dot = compareText.lastIndexOf('.');
+  if (dot != -1) {
+    lookup = compareText.mid(0, dot);
+    compareText = compareText.mid(dot + 1, offset);
+  }
+  if (!lookup.isEmpty() || !compareText.isEmpty()) {
+    compareText = compareText.toLower();
+    QStringList found;
+    QStringList l = py->introspection(_context, lookup, PythonQt::Anything);
+    Q_FOREACH (QString n, l) {
+      if (n.toLower().startsWith(compareText)) {
+        found << n;
+      }
+    }
+
+    if (!found.isEmpty()) {
+      m_completer->setCompletionPrefix(compareText);
+      m_completer->setCompletionMode(QCompleter::PopupCompletion);
+      m_completer->setModel(new QStringListModel(found, m_completer));
+      m_completer->setCaseSensitivity(Qt::CaseInsensitive);
+      QTextCursor c = this->textCursor();
+      c.movePosition(QTextCursor::StartOfWord);
+      QRect cr = cursorRect(c);
+      cr.setWidth(
+          m_completer->popup()->sizeHintForColumn(0) +
+          m_completer->popup()->verticalScrollBar()->sizeHint().width());
+      cr.translate(0, 8);
+      m_completer->complete(cr);
+    } else {
+      m_completer->popup()->hide();
+    }
+  } else {
+    m_completer->popup()->hide();
+  }
+}
+
 void QCodeEditor::setAutoIndentation(bool enabled) {
   m_autoIndentation = enabled;
 }
@@ -502,24 +577,6 @@ void QCodeEditor::setTabReplaceSize(int val) {
 
 int QCodeEditor::tabReplaceSize() const { return m_tabReplace.size(); }
 
-void QCodeEditor::setCompleter(QCompleter *completer) {
-  if (m_completer) {
-    disconnect(m_completer, nullptr, this, nullptr);
-  }
-
-  m_completer = completer;
-
-  if (!m_completer) {
-    return;
-  }
-
-  m_completer->setWidget(this);
-  m_completer->setCompletionMode(QCompleter::CompletionMode::PopupCompletion);
-
-  connect(m_completer, QOverload<const QString &>::of(&QCompleter::activated),
-          this, &QCodeEditor::insertCompletion);
-}
-
 void QCodeEditor::focusInEvent(QFocusEvent *e) {
   if (m_completer) {
     m_completer->setWidget(this);
@@ -538,8 +595,6 @@ void QCodeEditor::insertCompletion(QString s) {
   tc.insertText(s);
   setTextCursor(tc);
 }
-
-QCompleter *QCodeEditor::completer() const { return m_completer; }
 
 QChar QCodeEditor::charUnderCursor(int offset) const {
   auto block = textCursor().blockNumber();
