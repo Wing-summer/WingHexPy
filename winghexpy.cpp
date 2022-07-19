@@ -28,6 +28,7 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
   connect(plgint, &PlgInterface::log, this, &WingHexPy::log);
 
   PluginMenuInitBegin(menu, tr("WingHexPy")) {
+    menu->setIcon(ICONRES("icon"));
     PluginMenuAddItemIconLamba(menu, tr("ScriptEditor"), ICONRES("pys"),
                                [=] { ScriptWindow::instance()->show(); });
     PluginMenuAddItemIconAction(menu, tr("Run File"), ICONRES("runf"),
@@ -36,7 +37,7 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
   PluginMenuInitEnd();
 
   txt = plgint->getScriptingConsole();
-  PluginDockWidgetInit(dw, txt, tr("WingHexPyConsole"), "WingHexPyConsole");
+  PluginDockWidgetInit(dw, txt, tr("Console"), "WingHexPyConsole");
 
   infolist = new QListWidget;
   PluginDockWidgetInit(dlist, infolist, tr("InfoList"), "WingHexPyInfoList");

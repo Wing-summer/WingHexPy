@@ -33,7 +33,7 @@ ReplaceBar::ReplaceBar(QWidget *parent) : DFloatingWidget(parent) {
   m_layout = new QHBoxLayout();
   m_layout->setSpacing(10);
   m_layout->setContentsMargins(16, 6, 10, 6);
-  m_replaceLabel = new QLabel(tr("Find"));
+  m_replaceLabel = new QLabel(tr("Replace"));
   // m_replaceLabel->setMinimumHeight(36);
   m_replaceLine = new LineBar();
   // m_replaceLine->lineEdit()->setMinimumHeight(36);

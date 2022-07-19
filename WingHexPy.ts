@@ -1,30 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="zh_CN">
 <context>
     <name>FindBar</name>
     <message>
         <location filename="findbar.cpp" line="37"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>查找</translation>
     </message>
     <message>
         <location filename="findbar.cpp" line="41"/>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>上一个</translation>
     </message>
     <message>
         <location filename="findbar.cpp" line="43"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>JumpLineBar</name>
-    <message>
-        <location filename="jumplinebar.cpp" line="38"/>
-        <source>Go to Line: </source>
-        <translation type="unfinished"></translation>
+        <translation>下一个</translation>
     </message>
 </context>
 <context>
@@ -32,7 +24,7 @@
     <message>
         <location filename="plginterface.cpp" line="95"/>
         <source>[ExcuteFromScriptWindow]</source>
-        <translation type="unfinished"></translation>
+        <translation>【从脚本编辑窗口执行】</translation>
     </message>
 </context>
 <context>
@@ -40,61 +32,57 @@
     <message>
         <location filename="recentfilemanager.cpp" line="17"/>
         <source>ClearHistory</source>
-        <translation type="unfinished"></translation>
+        <translation>清空历史</translation>
     </message>
     <message>
         <location filename="recentfilemanager.cpp" line="23"/>
         <source>RemoveItem</source>
-        <translation type="unfinished"></translation>
+        <translation>删除项目</translation>
     </message>
     <message>
         <location filename="recentfilemanager.cpp" line="28"/>
         <location filename="recentfilemanager.cpp" line="112"/>
         <source>NoHistoryDel</source>
-        <translation type="unfinished"></translation>
+        <translation>无可删除的历史记录</translation>
     </message>
     <message>
         <location filename="recentfilemanager.cpp" line="32"/>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>输入</translation>
     </message>
     <message>
         <location filename="recentfilemanager.cpp" line="32"/>
         <source>InputIndex</source>
-        <translation type="unfinished"></translation>
+        <translation>请输入索引</translation>
     </message>
     <message>
         <location filename="recentfilemanager.cpp" line="123"/>
         <source>HistoryClearFinished</source>
-        <translation type="unfinished"></translation>
+        <translation>历史记录清理完毕</translation>
     </message>
 </context>
 <context>
     <name>ReplaceBar</name>
     <message>
-        <location filename="replacebar.cpp" line="36"/>
-        <source>Find</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="replacebar.cpp" line="40"/>
         <source>Replace With</source>
-        <translation type="unfinished"></translation>
+        <translation>替换文本</translation>
     </message>
     <message>
+        <location filename="replacebar.cpp" line="36"/>
         <location filename="replacebar.cpp" line="44"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>替换</translation>
     </message>
     <message>
         <location filename="replacebar.cpp" line="47"/>
         <source>Skip</source>
-        <translation type="unfinished"></translation>
+        <translation>跳过</translation>
     </message>
     <message>
         <location filename="replacebar.cpp" line="50"/>
         <source>Replace All</source>
-        <translation type="unfinished"></translation>
+        <translation>全部替换</translation>
     </message>
 </context>
 <context>
@@ -102,200 +90,225 @@
     <message>
         <location filename="scriptwindow.cpp" line="37"/>
         <source>WingHexPyScriptWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>羽云 Python 脚本编辑器</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="73"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>文件</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="75"/>
         <location filename="scriptwindow.cpp" line="177"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>新建</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="79"/>
         <location filename="scriptwindow.cpp" line="179"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>打开</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="83"/>
         <location filename="scriptwindow.cpp" line="181"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>保存</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="87"/>
         <location filename="scriptwindow.cpp" line="183"/>
         <source>SaveAs</source>
-        <translation type="unfinished"></translation>
+        <translation>另存为</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="92"/>
         <source>RecentFile</source>
-        <translation type="unfinished"></translation>
+        <translation>最近文件</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="96"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="102"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="104"/>
         <location filename="scriptwindow.cpp" line="186"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>撤销</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="110"/>
         <location filename="scriptwindow.cpp" line="190"/>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>恢复</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="117"/>
         <location filename="scriptwindow.cpp" line="194"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>剪切</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="121"/>
         <location filename="scriptwindow.cpp" line="196"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>复制</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="125"/>
         <location filename="scriptwindow.cpp" line="198"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>粘贴</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="130"/>
         <location filename="scriptwindow.cpp" line="201"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>查找</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="134"/>
         <location filename="scriptwindow.cpp" line="203"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>替换</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="138"/>
         <location filename="scriptwindow.cpp" line="205"/>
-        <location filename="scriptwindow.cpp" line="489"/>
+        <location filename="scriptwindow.cpp" line="558"/>
         <source>Goto</source>
-        <translation type="unfinished"></translation>
+        <translation>跳转</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="145"/>
         <source>Script</source>
-        <translation type="unfinished"></translation>
+        <translation>脚本</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="147"/>
         <location filename="scriptwindow.cpp" line="208"/>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation>执行</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="151"/>
         <location filename="scriptwindow.cpp" line="210"/>
         <source>RunFile</source>
-        <translation type="unfinished"></translation>
+        <translation>从文件执行</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="158"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>关于</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="160"/>
         <location filename="scriptwindow.cpp" line="213"/>
         <source>AboutPlugin</source>
-        <translation type="unfinished"></translation>
+        <translation>关于插件</translation>
     </message>
     <message>
         <location filename="scriptwindow.cpp" line="162"/>
         <location filename="scriptwindow.cpp" line="215"/>
         <source>Sponsor</source>
-        <translation type="unfinished"></translation>
+        <translation>赞助</translation>
     </message>
     <message>
-        <location filename="scriptwindow.cpp" line="240"/>
+        <location filename="scriptwindow.cpp" line="245"/>
+        <source>row:</source>
+        <translation>行：</translation>
+    </message>
+    <message>
+        <location filename="scriptwindow.cpp" line="250"/>
+        <source>col:</source>
+        <translation>列：</translation>
+    </message>
+    <message>
+        <location filename="scriptwindow.cpp" line="255"/>
+        <source>len:</source>
+        <translation>选长：</translation>
+    </message>
+    <message>
+        <location filename="scriptwindow.cpp" line="261"/>
+        <source>InfoSave</source>
+        <translation>是否保存</translation>
+    </message>
+    <message>
+        <location filename="scriptwindow.cpp" line="264"/>
+        <source>InfoReadWrite</source>
+        <translation>是否可写</translation>
+    </message>
+    <message>
+        <location filename="scriptwindow.cpp" line="293"/>
         <source>FindReachTheEnd</source>
-        <translation type="unfinished"></translation>
+        <translation>查找已达文件尾</translation>
     </message>
     <message>
-        <location filename="scriptwindow.cpp" line="251"/>
+        <location filename="scriptwindow.cpp" line="304"/>
         <source>FindReachTheStart</source>
-        <translation type="unfinished"></translation>
+        <translation>查找已达文件头</translation>
     </message>
     <message>
-        <location filename="scriptwindow.cpp" line="309"/>
+        <location filename="scriptwindow.cpp" line="362"/>
         <source>ReplaceReachTheStart</source>
-        <translation type="unfinished"></translation>
+        <translation>替换已达文件头</translation>
     </message>
     <message>
-        <location filename="scriptwindow.cpp" line="382"/>
+        <location filename="scriptwindow.cpp" line="443"/>
         <source>CloseConfirm</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭确认</translation>
     </message>
     <message>
-        <location filename="scriptwindow.cpp" line="383"/>
+        <location filename="scriptwindow.cpp" line="444"/>
         <source>NotSaved</source>
-        <translation type="unfinished"></translation>
+        <translation>未保存</translation>
     </message>
     <message>
-        <location filename="scriptwindow.cpp" line="392"/>
+        <location filename="scriptwindow.cpp" line="453"/>
         <source>ChooseFile</source>
-        <translation type="unfinished"></translation>
+        <translation>选择文件</translation>
     </message>
     <message>
-        <location filename="scriptwindow.cpp" line="403"/>
+        <location filename="scriptwindow.cpp" line="469"/>
         <source>OpenFail</source>
-        <translation type="unfinished"></translation>
+        <translation>打开失败</translation>
     </message>
     <message>
-        <location filename="scriptwindow.cpp" line="419"/>
+        <location filename="scriptwindow.cpp" line="486"/>
         <source>SaveFail</source>
-        <translation type="unfinished"></translation>
+        <translation>保存失败</translation>
     </message>
     <message>
-        <location filename="scriptwindow.cpp" line="425"/>
+        <location filename="scriptwindow.cpp" line="491"/>
         <source>ChooseSaveFile</source>
-        <translation type="unfinished"></translation>
+        <translation>选择保存文件</translation>
     </message>
     <message>
-        <location filename="scriptwindow.cpp" line="435"/>
+        <location filename="scriptwindow.cpp" line="504"/>
         <source>SaveAsFail</source>
-        <translation type="unfinished"></translation>
+        <translation>另存为失败</translation>
     </message>
     <message>
-        <location filename="scriptwindow.cpp" line="454"/>
-        <location filename="scriptwindow.cpp" line="466"/>
+        <location filename="scriptwindow.cpp" line="523"/>
+        <location filename="scriptwindow.cpp" line="535"/>
         <source>OtherScriptRunning</source>
-        <translation type="unfinished"></translation>
+        <translation>执行错误：其它的脚本正在运行！</translation>
     </message>
     <message>
-        <location filename="scriptwindow.cpp" line="459"/>
+        <location filename="scriptwindow.cpp" line="528"/>
         <source>ChoosePyScript</source>
-        <translation type="unfinished"></translation>
+        <translation>选择 Python 脚本</translation>
     </message>
     <message>
-        <location filename="scriptwindow.cpp" line="489"/>
+        <location filename="scriptwindow.cpp" line="558"/>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>行</translation>
     </message>
 </context>
 <context>
@@ -303,86 +316,86 @@
     <message>
         <location filename="sponsordialog.cpp" line="6"/>
         <source>Sponsor</source>
-        <translation type="unfinished"></translation>
+        <translation>赞助</translation>
     </message>
     <message>
         <location filename="sponsordialog.cpp" line="9"/>
         <source>ThanksForSponsor</source>
-        <translation type="unfinished"></translation>
+        <translation>感谢大家的赞助支持！</translation>
     </message>
 </context>
 <context>
     <name>WingHexPy</name>
     <message>
         <location filename="winghexpy.cpp" line="30"/>
-        <location filename="winghexpy.cpp" line="133"/>
+        <location filename="winghexpy.cpp" line="134"/>
         <source>WingHexPy</source>
-        <translation type="unfinished"></translation>
+        <translation>WingHexPy</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="31"/>
+        <location filename="winghexpy.cpp" line="32"/>
         <source>ScriptEditor</source>
-        <translation type="unfinished"></translation>
+        <translation>脚本编辑器</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="33"/>
-        <location filename="winghexpy.cpp" line="63"/>
+        <location filename="winghexpy.cpp" line="34"/>
+        <location filename="winghexpy.cpp" line="64"/>
         <source>Run File</source>
-        <translation type="unfinished"></translation>
+        <translation>从文件执行</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="39"/>
-        <source>WingHexPyConsole</source>
-        <translation type="unfinished"></translation>
+        <location filename="winghexpy.cpp" line="40"/>
+        <source>Console</source>
+        <translation>控制台</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="42"/>
-        <location filename="winghexpy.cpp" line="70"/>
+        <location filename="winghexpy.cpp" line="43"/>
+        <location filename="winghexpy.cpp" line="71"/>
         <source>InfoList</source>
-        <translation type="unfinished"></translation>
+        <translation>信息列表</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="45"/>
-        <location filename="winghexpy.cpp" line="84"/>
+        <location filename="winghexpy.cpp" line="46"/>
+        <location filename="winghexpy.cpp" line="85"/>
         <source>InfoTree</source>
-        <translation type="unfinished"></translation>
+        <translation>树信息列表</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="48"/>
-        <location filename="winghexpy.cpp" line="77"/>
+        <location filename="winghexpy.cpp" line="49"/>
+        <location filename="winghexpy.cpp" line="78"/>
         <source>InfoTable</source>
-        <translation type="unfinished"></translation>
+        <translation>信息表格</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="52"/>
-        <location filename="winghexpy.cpp" line="91"/>
+        <location filename="winghexpy.cpp" line="53"/>
+        <location filename="winghexpy.cpp" line="92"/>
         <source>InfoTxt</source>
-        <translation type="unfinished"></translation>
+        <translation>信息文本浏览</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="60"/>
+        <location filename="winghexpy.cpp" line="61"/>
         <source>ScriptWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>脚本窗口</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="99"/>
+        <location filename="winghexpy.cpp" line="100"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>关于</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="106"/>
+        <location filename="winghexpy.cpp" line="107"/>
         <source>Sponsor</source>
-        <translation type="unfinished"></translation>
+        <translation>赞助</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="114"/>
+        <location filename="winghexpy.cpp" line="115"/>
         <source>ChooseFile</source>
-        <translation type="unfinished"></translation>
+        <translation>选择文件</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="138"/>
+        <location filename="winghexpy.cpp" line="139"/>
         <source>A useful plugin for python3.7 support.</source>
-        <translation type="unfinished"></translation>
+        <translation>一个十分有用的 Python 3.7 的支持插件。</translation>
     </message>
 </context>
 </TS>
