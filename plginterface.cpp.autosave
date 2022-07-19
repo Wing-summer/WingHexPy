@@ -10,7 +10,6 @@ PlgInterface *PlgInterface::m_instace = nullptr;
 bool PlgInterface::init() {
   PythonQt::init(PythonQt::IgnoreSiteModule | PythonQt::RedirectStdOut);
   auto py = PythonQt::self();
-  py->addDecorators(new PyInfoDecorators(this));
   py->registerClass(&QListWidget::staticMetaObject, "QtGui");
   py->registerClass(&QTableWidget::staticMetaObject, "QtGui");
   py->registerClass(&QTreeWidget::staticMetaObject, "QtGui");

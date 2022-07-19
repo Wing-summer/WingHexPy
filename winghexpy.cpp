@@ -37,6 +37,16 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
   txt = plgint->getScriptingConsole();
   PluginDockWidgetInit(dw, txt, tr("WingHexPyConsole"), "WingHexPyConsole");
 
+  infolist = new QListWidget;
+  PluginDockWidgetInit(dlist, infolist, tr("InfoList"), "WingHexPyInfoList");
+  infotree = new QTreeWidget;
+  PluginDockWidgetInit(dtree, infotree, tr("InfoTree"), "WingHexPyInfoTree");
+  infotable = new QTableWidget;
+  PluginDockWidgetInit(dtable, infotable, tr("InfoTable"),
+                       "WingHexPyInfoTable");
+
+  plgint->initInfo(infolist, infotree, infotable);
+
   PluginToolBarInitBegin(tb, "WingHexPy") {
     PluginToolBarAddLamba(
         tb, QIcon(":/img/pys.png"), [=] { ScriptWindow::instance()->show(); },
@@ -69,13 +79,15 @@ QString WingHexPy::pluginComment() {
 
 uint WingHexPy::pluginVersion() { return 1; }
 
-Qt::DockWidgetArea WingHexPy::registerDockWidgetDockArea() {
-  return Qt::DockWidgetArea::BottomDockWidgetArea;
-}
-
 QMenu *WingHexPy::registerMenu() { return menu; }
 
-QDockWidget *WingHexPy::registerDockWidget() { return dw; }
+void WingHexPy::registerDockWidget(
+    QMap<QDockWidget *, Qt::DockWidgetArea> &rdw) {
+  rdw.insert(dw, Qt::DockWidgetArea::BottomDockWidgetArea);
+  rdw.insert(dtree, Qt::DockWidgetArea::BottomDockWidgetArea);
+  rdw.insert(dtable, Qt::DockWidgetArea::BottomDockWidgetArea);
+  rdw.insert(dlist, Qt::DockWidgetArea::BottomDockWidgetArea);
+}
 
 QToolBar *WingHexPy::registerToolBar() { return tb; }
 

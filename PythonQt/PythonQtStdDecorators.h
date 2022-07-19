@@ -82,11 +82,11 @@ public Q_SLOTS:
     return connect(sender, signal, receiver, slot, type);
   }
   bool disconnect(QObject *sender, const QString &signal,
-                  PyObject *callable = NULL);
+                  PyObject *callable = nullptr);
   bool disconnect(QObject *sender, const QString &signal, QObject *receiver,
                   const QString &slot);
   bool static_QObject_disconnect(QObject *sender, const QString &signal,
-                                 PyObject *callable = NULL) {
+                                 PyObject *callable = nullptr) {
     return disconnect(sender, signal, callable);
   }
   bool static_QObject_disconnect(QObject *sender, const QString &signal,
@@ -253,7 +253,7 @@ public Q_SLOTS:
 class PYTHONQT_EXPORT PythonQtDebugAPI : public QObject {
   Q_OBJECT
 public:
-  PythonQtDebugAPI(QObject *parent) : QObject(parent){};
+  PythonQtDebugAPI(QObject *parent) : QObject(parent) {}
 
 public slots:
   //! Returns if the C++ object is owned by PythonQt and will be deleted when

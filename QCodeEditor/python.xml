@@ -9,6 +9,7 @@
         <name>if</name>
         <name>else</name>
         <name>def</name>
+        <name>from</name>
         <name>import</name>
         <name>return</name>
         <name>class</name>
@@ -29,110 +30,6 @@
         <name>max</name>
         <name>len</name>
         <name>main</name>
-        <name>currentDoc</name>
-        <name>currentDocFilename</name>
-        <name>isReadOnly</name>
-        <name>isKeepSize</name>
-        <name>isLocked</name>
-        <name>documentLines</name>
-        <name>documentBytes</name>
-        <name>currentPos</name>
-        <name>selectionPos</name>
-        <name>currentRow</name>
-        <name>currentColumn</name>
-        <name>currentOffset</name>
-        <name>selectlength</name>
-        <name>stringVisible</name>
-        <name>addressVisible</name>
-        <name>headerVisible</name>
-        <name>addressBase</name>
-        <name>isModified</name>
-        <name>isEmpty</name>
-        <name>atEnd</name>
-        <name>canUndo</name>
-        <name>canRedo</name>
-        <name>copy</name>
-        <name>read</name>
-        <name>searchForward</name>
-        <name>searchBackward</name>
-        <name>findAllBytes</name>
-        <name>documentLastLine</name>
-        <name>documentLastColumn</name>
-        <name>lineHasMetadata</name>
-        <name>getMetadatas</name>
-        <name>getMetaLine</name>
-        <name>lineHasBookMark</name>
-        <name>getsBookmarkPos</name>
-        <name>bookMark</name>
-        <name>bookMarkComment</name>
-        <name>getBookMarks</name>
-        <name>existBookMark</name>
-        <name>getOpenFiles</name>
-        <name>getSupportedEncodings</name>
-        <name>currentEncoding</name>
-        <name>switchDocument</name>
-        <name>setKeepSize</name>
-        <name>setStringVisible</name>
-        <name>setAddressVisible</name>
-        <name>setHeaderVisible</name>
-        <name>setAddressBase</name>
-        <name>undo</name>
-        <name>redo</name>
-        <name>cut</name>
-        <name>paste</name>
-        <name>insert</name>
-        <name>paste</name>
-        <name>remove</name>
-        <name>moveTo</name>
-        <name>select</name>
-        <name>selectOffset</name>
-        <name>setInsertionMode</name>
-        <name>enabledCursor</name>
-        <name>metadata</name>
-        <name>removeMetadata</name>
-        <name>clearMeta</name>
-        <name>color</name>
-        <name>foreground</name>
-        <name>background</name>
-        <name>comment</name>
-        <name>applyMetas</name>
-        <name>setMetaVisible</name>
-        <name>setMetafgVisible</name>
-        <name>setMetabgVisible</name>
-        <name>setMetaCommentVisible</name>
-        <name>newFile</name>
-        <name>openFile</name>
-        <name>openDriver</name>
-        <name>closeFile</name>
-        <name>saveFile</name>
-        <name>exportFile</name>
-        <name>exportFileGUI</name>
-        <name>saveasFile</name>
-        <name>saveasFileGUI</name>
-        <name>closeCurrentFile</name>
-        <name>saveCurrentFile</name>
-        <name>openFileGUI</name>
-        <name>openDriverGUI</name>
-        <name>findGUI</name>
-        <name>gotoGUI</name>
-        <name>fillGUI</name>
-        <name>fillzeroGUI</name>
-        <name>fillnopGUI</name>
-        <name>addBookMark</name>
-        <name>modBookMark</name>
-        <name>applyBookMarks</name>
-        <name>removeBookMark</name>
-        <name>clearBookMark</name>
-        <name>openWorkSpace</name>
-        <name>setCurrentEncoding</name>
-        <name>toast</name>
-        <name>print</name>
-        <name>errPrint</name>
-        <name>infoPrint</name>
-        <name>warnPrint</name>
-        <name>requestControl</name>
-        <name>hasControl</name>
-        <name>requestRelease</name>
     </section>
     <section name="PrimitiveType">
         <name>float</name>

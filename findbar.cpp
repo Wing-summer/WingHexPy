@@ -93,8 +93,7 @@ void FindBar::focus() {
   m_editLine->lineEdit()->selectAll();
 }
 
-void FindBar::activeInput(QString text, QString file, int row, int column,
-                          int scrollOffset) {
+void FindBar::activeInput(QString text, int row, int column, int scrollOffset) {
   // Try fill keyword with select text.
   m_editLine->lineEdit()->clear();
   m_editLine->lineEdit()->insert(text);
@@ -104,7 +103,6 @@ void FindBar::activeInput(QString text, QString file, int row, int column,
   QWidget::show();
 
   // Save file info for back to position.
-  m_findFile = file;
   m_findFileRow = row;
   m_findFileColumn = column;
   m_findFileSrollOffset = scrollOffset;
@@ -119,12 +117,16 @@ void FindBar::findCancel() {
 }
 
 void FindBar::handleContentChanged() {
-  updateSearchKeyword(m_findFile, m_editLine->lineEdit()->text());
+  updateSearchKeyword(m_editLine->lineEdit()->text().trimmed());
 }
 
-void FindBar::handleFindPrev() { findPrev(m_editLine->lineEdit()->text()); }
+void FindBar::handleFindPrev() {
+  findPrev(m_editLine->lineEdit()->text().trimmed());
+}
 
-void FindBar::handleFindNext() { findNext(m_editLine->lineEdit()->text()); }
+void FindBar::handleFindNext() {
+  findNext(m_editLine->lineEdit()->text().trimmed());
+}
 
 void FindBar::hideEvent(QHideEvent *) {
   //保留查询标记
@@ -179,7 +181,7 @@ void FindBar::setSearched(bool _) { searched = _; }
 
 void FindBar::findPreClicked() {
   if (!searched) {
-    updateSearchKeyword(m_findFile, m_editLine->lineEdit()->text());
+    updateSearchKeyword(m_editLine->lineEdit()->text());
     emit findPrev(m_editLine->lineEdit()->text());
     searched = true;
   } else {

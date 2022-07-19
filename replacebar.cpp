@@ -45,9 +45,6 @@ ReplaceBar::ReplaceBar(QWidget *parent) : DFloatingWidget(parent) {
   // m_replaceButton->setMinimumWidth(66);
   // m_replaceButton->setMinimumHeight(36);
   m_replaceSkipButton = new QPushButton(tr("Skip"));
-  // m_replaceSkipButton->setMinimumWidth(66);
-  // m_replaceSkipButton->setMinimumHeight(36);
-  m_replaceRestButton = new QPushButton(tr("Replace Rest"));
   // m_replaceRestButton->setMinimumWidth(80);
   // m_replaceRestButton->setMinimumHeight(36);
   m_replaceAllButton = new QPushButton(tr("Replace All"));
@@ -65,7 +62,6 @@ ReplaceBar::ReplaceBar(QWidget *parent) : DFloatingWidget(parent) {
   m_layout->addWidget(m_withLine);
   m_layout->addWidget(m_replaceButton);
   m_layout->addWidget(m_replaceSkipButton);
-  m_layout->addWidget(m_replaceRestButton);
   m_layout->addWidget(m_replaceAllButton);
   m_layout->addWidget(m_closeButton);
   this->setLayout(m_layout);
@@ -90,17 +86,10 @@ ReplaceBar::ReplaceBar(QWidget *parent) : DFloatingWidget(parent) {
   connect(m_withLine, &LineBar::returnPressed, this,
           &ReplaceBar::handleReplaceNext, Qt::QueuedConnection);
 
-  connect(m_replaceLine, &LineBar::pressCtrlEnter, this, [=]() {
-    emit replaceSkip(m_replaceFile, m_replaceLine->lineEdit()->text());
-  });
-  connect(m_withLine, &LineBar::pressCtrlEnter, this, [=]() {
-    emit replaceSkip(m_replaceFile, m_replaceLine->lineEdit()->text());
-  });
-
-  connect(m_replaceLine, &LineBar::pressAltEnter, this,
-          &ReplaceBar::handleReplaceRest, Qt::QueuedConnection);
-  connect(m_withLine, &LineBar::pressAltEnter, this,
-          &ReplaceBar::handleReplaceRest, Qt::QueuedConnection);
+  connect(m_replaceLine, &LineBar::pressCtrlEnter, this,
+          [=]() { emit replaceSkip(m_replaceLine->lineEdit()->text()); });
+  connect(m_withLine, &LineBar::pressCtrlEnter, this,
+          [=]() { emit replaceSkip(m_replaceLine->lineEdit()->text()); });
 
   connect(m_replaceLine, &LineBar::pressMetaEnter, this,
           &ReplaceBar::handleReplaceAll, Qt::QueuedConnection);
@@ -112,11 +101,8 @@ ReplaceBar::ReplaceBar(QWidget *parent) : DFloatingWidget(parent) {
 
   connect(m_replaceButton, &QPushButton::clicked, this,
           &ReplaceBar::handleReplaceNext, Qt::QueuedConnection);
-  connect(m_replaceSkipButton, &QPushButton::clicked, this, [=]() {
-    emit replaceSkip(m_replaceFile, m_replaceLine->lineEdit()->text());
-  });
-  connect(m_replaceRestButton, &QPushButton::clicked, this,
-          &ReplaceBar::handleReplaceRest, Qt::QueuedConnection);
+  connect(m_replaceSkipButton, &QPushButton::clicked, this,
+          [=]() { emit replaceSkip(m_replaceLine->lineEdit()->text()); });
   connect(m_replaceAllButton, &QPushButton::clicked, this,
           &ReplaceBar::handleReplaceAll, Qt::QueuedConnection);
 
@@ -128,7 +114,7 @@ bool ReplaceBar::isFocus() { return m_replaceLine->hasFocus(); }
 
 void ReplaceBar::focus() { m_replaceLine->lineEdit()->setFocus(); }
 
-void ReplaceBar::activeInput(QString text, QString file, int row, int column,
+void ReplaceBar::activeInput(QString text, int row, int column,
                              int scrollOffset) {
   // Try fill keyword with select text.
   m_withLine->lineEdit()->clear();
@@ -140,7 +126,6 @@ void ReplaceBar::activeInput(QString text, QString file, int row, int column,
   show();
 
   // Save file info for back to position.
-  m_replaceFile = file;
   m_replaceFileRow = row;
   m_replaceFileColumn = column;
   m_replaceFileSrollOffset = scrollOffset;
@@ -156,22 +141,16 @@ void ReplaceBar::replaceClose() {
 }
 
 void ReplaceBar::handleContentChanged() {
-  updateSearchKeyword(m_replaceFile, m_replaceLine->lineEdit()->text());
+  updateSearchKeyword(m_replaceLine->lineEdit()->text());
 }
 
 void ReplaceBar::handleReplaceNext() {
   if (!searched) {
     emit removeSearchKeyword();
-    emit beforeReplace(m_replaceLine->lineEdit()->text());
   }
-  replaceNext(m_replaceFile, m_replaceLine->lineEdit()->text(),
+  replaceNext(m_replaceLine->lineEdit()->text(),
               m_withLine->lineEdit()->text());
   searched = true;
-}
-
-void ReplaceBar::handleReplaceRest() {
-  replaceRest(m_replaceLine->lineEdit()->text(),
-              m_withLine->lineEdit()->text());
 }
 
 void ReplaceBar::handleReplaceAll() {
@@ -220,9 +199,6 @@ void ReplaceBar::keyPressEvent(QKeyEvent *e) {
       }
       if (m_replaceButton->hasFocus()) {
         m_replaceButton->click();
-      }
-      if (m_replaceRestButton->hasFocus()) {
-        m_replaceRestButton->click();
       }
       if (m_replaceSkipButton->hasFocus()) {
         m_replaceSkipButton->click();

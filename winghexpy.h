@@ -5,7 +5,10 @@
 #include "PythonQt/gui/PythonQtScriptingConsole.h"
 #include "plginterface.h"
 #include <Python.h>
+#include <QListWidget>
+#include <QTableWidget>
 #include <QTextBrowser>
+#include <QTreeWidget>
 
 class WingHexPy : public IWingPlugin {
   Q_OBJECT
@@ -24,14 +27,14 @@ public:
   void unload() override;
   QMenu *registerMenu() override;
   QToolBar *registerToolBar() override;
-  QDockWidget *registerDockWidget() override;
+  void
+  registerDockWidget(QMap<QDockWidget *, Qt::DockWidgetArea> &rdw) override;
   QString pluginName() override;
   QString pluginAuthor() override;
   uint pluginVersion() override;
   QString signature() override;
   QString pluginComment() override;
   void plugin2MessagePipe(WingPluginMessage type, QList<QVariant> msg) override;
-  Qt::DockWidgetArea registerDockWidgetDockArea() override;
 
 public:
   void log(QString message);
@@ -46,6 +49,12 @@ private:
   QToolBar *tb;
   QDockWidget *dw;
   PythonQtScriptingConsole *txt;
+
+private:
+  QDockWidget *dlist, *dtree, *dtable;
+  QListWidget *infolist;
+  QTreeWidget *infotree;
+  QTableWidget *infotable;
 };
 
 #endif // GENERICPLUGIN_H

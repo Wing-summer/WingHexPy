@@ -4,6 +4,7 @@
 #include "QCodeEditor/QCodeEditor.hpp"
 #include "QCodeEditor/QSyntaxStyle.hpp"
 #include "findbar.h"
+#include "jumplinebar.h"
 #include "recentfilemanager.h"
 #include "replacebar.h"
 #include <DGuiApplicationHelper>
@@ -18,6 +19,7 @@ class ScriptWindow : public DMainWindow {
   Q_OBJECT
 public:
   ScriptWindow(DMainWindow *parent = nullptr);
+  ~ScriptWindow();
   static ScriptWindow *instance();
 
 private:
@@ -57,9 +59,13 @@ private:
   QVBoxLayout *vlayout;
   FindBar *findbar;
   ReplaceBar *replacebar;
+  JumpLineBar *jmpbar;
+  QIcon picon;
 
 private:
   bool isSaved = true;
+  QString lastusedpath;
+  QString currentfilename;
 };
 
 #endif // SCRIPTWINDOW_H

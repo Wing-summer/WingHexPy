@@ -5,9 +5,15 @@
 #include "plginterface.h"
 #include "sponsordialog.h"
 #include <DFileDialog>
+#include <DMessageManager>
 #include <DTitlebar>
 #include <DWidgetUtil>
 #include <Python.h>
+#include <QApplication>
+#include <QMessageBox>
+#include <QScrollBar>
+#include <QShortcut>
+#include <QTextDocumentFragment>
 
 #define ICONRES(name) QIcon(":/img/" name ".png")
 
@@ -24,7 +30,7 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
   setMinimumSize(QSize(800, 600));
 
   auto _title = titlebar();
-  auto picon = ICONRES("pys");
+  picon = ICONRES("pys");
   setWindowIcon(picon);
   _title->setIcon(picon);
   _title->setTitle(tr("WingHexPyScriptWindow"));
@@ -55,6 +61,10 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
 
   vlayout->addWidget(editor);
 
+  auto scrun = QKeySequence(Qt::Key_F5);
+  auto scrunf =
+      QKeySequence(Qt::KeyboardModifier::ControlModifier | Qt::Key_F5);
+
   PluginMenuInitBegin(menu, "") {
     Q_UNUSED(a);
     QMenu *m;
@@ -62,12 +72,20 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
       m->setIcon(ICONRES("file"));
       PluginMenuAddItemIconAction(m, tr("New"), ICONRES("new"),
                                   ScriptWindow::on_new);
+      a->setShortcut(QKeySequence::New);
+      a->setShortcutVisibleInContextMenu(true);
       PluginMenuAddItemIconAction(m, tr("Open"), ICONRES("open"),
                                   ScriptWindow::on_open);
+      a->setShortcut(QKeySequence::Open);
+      a->setShortcutVisibleInContextMenu(true);
       PluginMenuAddItemIconAction(m, tr("Save"), ICONRES("save"),
                                   ScriptWindow::on_save);
+      a->setShortcut(QKeySequence::Save);
+      a->setShortcutVisibleInContextMenu(true);
       PluginMenuAddItemIconAction(m, tr("SaveAs"), ICONRES("saveas"),
                                   ScriptWindow::on_saveas);
+      a->setShortcut(QKeySequence::SaveAs);
+      a->setShortcutVisibleInContextMenu(true);
       auto rm = new QMenu(menu);
       rm->setTitle(tr("RecentFile"));
       recentmanager = new RecentFileManager(rm, this);
@@ -83,24 +101,38 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
       m->setIcon(ICONRES("edit"));
       PluginMenuAddItemIconAction(m, tr("Undo"), ICONRES("undo"),
                                   ScriptWindow::on_undo);
+      a->setShortcut(QKeySequence::Undo);
+      a->setShortcutVisibleInContextMenu(true);
       a->setEnabled(false);
       mundo = a;
       PluginMenuAddItemIconAction(m, tr("Redo"), ICONRES("redo"),
                                   ScriptWindow::on_redo);
+      a->setShortcut(QKeySequence::Redo);
+      a->setShortcutVisibleInContextMenu(true);
       a->setEnabled(false);
       mredo = a;
       m->addSeparator();
       PluginMenuAddItemIconAction(m, tr("Cut"), ICONRES("cut"),
                                   ScriptWindow::on_cut);
+      a->setShortcut(QKeySequence::Cut);
+      a->setShortcutVisibleInContextMenu(true);
       PluginMenuAddItemIconAction(m, tr("Copy"), ICONRES("copy"),
                                   ScriptWindow::on_copy);
+      a->setShortcut(QKeySequence::Copy);
+      a->setShortcutVisibleInContextMenu(true);
       PluginMenuAddItemIconAction(m, tr("Paste"), ICONRES("paste"),
                                   ScriptWindow::on_paste);
+      a->setShortcut(QKeySequence::Paste);
+      a->setShortcutVisibleInContextMenu(true);
       m->addSeparator();
       PluginMenuAddItemIconAction(m, tr("Find"), ICONRES("find"),
                                   ScriptWindow::on_find);
+      a->setShortcut(QKeySequence::Find);
+      a->setShortcutVisibleInContextMenu(true);
       PluginMenuAddItemIconAction(m, tr("Replace"), ICONRES("replace"),
                                   ScriptWindow::on_replace);
+      a->setShortcut(QKeySequence::Replace);
+      a->setShortcutVisibleInContextMenu(true);
     }
     PluginMenuInitEnd();
     menu->addMenu(m);
@@ -108,8 +140,12 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
       m->setIcon(ICONRES("icon"));
       PluginMenuAddItemIconAction(m, tr("Run"), ICONRES("run"),
                                   ScriptWindow::on_run);
+      a->setShortcut(scrun);
+      a->setShortcutVisibleInContextMenu(true);
       PluginMenuAddItemIconAction(m, tr("RunFile"), ICONRES("runf"),
                                   ScriptWindow::on_runfile);
+      a->setShortcut(scrunf);
+      a->setShortcutVisibleInContextMenu(true);
     }
     PluginMenuInitEnd();
     menu->addMenu(m);
@@ -187,13 +223,142 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
   });
 
   findbar = new FindBar(this);
+  connect(findbar, &FindBar::findNext, this, [=](const QString &keyword) {
+    if (!editor->find(keyword)) {
+      auto cur = editor->textCursor();
+      cur.movePosition(QTextCursor::Start);
+      editor->setTextCursor(cur);
+      DMessageManager::instance()->sendMessage(this, picon,
+                                               tr("FindReachTheEnd"));
+      editor->find(keyword);
+    }
+    editor->setFocus();
+  });
+  connect(findbar, &FindBar::findPrev, this, [=](const QString &keyword) {
+    if (!editor->find(keyword, QTextDocument::FindFlag::FindBackward)) {
+      auto cur = editor->textCursor();
+      cur.movePosition(QTextCursor::End);
+      editor->setTextCursor(cur);
+      DMessageManager::instance()->sendMessage(this, picon,
+                                               tr("FindReachTheStart"));
+      editor->find(keyword, QTextDocument::FindFlag::FindBackward);
+    }
+    editor->setFocus();
+  });
+  connect(findbar, &FindBar::removeSearchKeyword, this, [=] {
+    auto cur = editor->textCursor();
+    cur.clearSelection();
+    editor->setTextCursor(cur);
+    editor->setFocus();
+  });
+  connect(findbar, &FindBar::updateSearchKeyword, this, [=](QString keyword) {
+    if (!editor->find(keyword)) {
+      auto cur = editor->textCursor();
+      cur.movePosition(QTextCursor::Start);
+      editor->setTextCursor(cur);
+      editor->find(keyword);
+    }
+    editor->setFocus();
+  });
+  connect(findbar, &FindBar::sigFindbarClose, this, [=] {
+    auto cur = editor->textCursor();
+    cur.clearSelection();
+    editor->setTextCursor(cur);
+    editor->setFocus();
+  });
   vlayout->addWidget(findbar);
   replacebar = new ReplaceBar(this);
+  connect(replacebar, &ReplaceBar::replaceAll, this,
+          [=](QString replaceText, QString withText) {
+            auto cur = editor->textCursor();
+            auto oldpos = cur.position();
+            cur.movePosition(QTextCursor::Start);
+            editor->setTextCursor(cur);
+            cur.beginEditBlock();
+            while (editor->find(replaceText)) {
+              cur = editor->textCursor();
+              cur.removeSelectedText();
+              cur.insertText(withText);
+            }
+            cur.endEditBlock();
+            cur.setPosition(oldpos);
+            editor->setTextCursor(cur);
+            editor->setFocus();
+          });
+  connect(replacebar, &ReplaceBar::replaceNext, this,
+          [=](QString replaceText, QString withText) {
+            auto cur = editor->textCursor();
+            if (cur.selectedText().length()) {
+              cur.beginEditBlock();
+              cur.removeSelectedText();
+              cur.insertText(withText);
+              cur.endEditBlock();
+            }
+            if (!editor->find(replaceText)) {
+              cur.movePosition(QTextCursor::Start);
+              editor->setTextCursor(cur);
+              DMessageManager::instance()->sendMessage(
+                  this, picon, tr("ReplaceReachTheStart"));
+            }
+            editor->setFocus();
+          });
+  connect(replacebar, &ReplaceBar::replaceSkip, this, [=](QString keyword) {
+    if (!editor->find(keyword)) {
+      auto cur = editor->textCursor();
+      cur.movePosition(QTextCursor::Start);
+      editor->setTextCursor(cur);
+      editor->find(keyword);
+    }
+    editor->setFocus();
+  });
+  connect(replacebar, &ReplaceBar::updateSearchKeyword, this,
+          [=](QString keyword) {
+            if (!editor->find(keyword)) {
+              auto cur = editor->textCursor();
+              cur.movePosition(QTextCursor::Start);
+              editor->setTextCursor(cur);
+              editor->find(keyword);
+            }
+            editor->setFocus();
+          });
+  connect(replacebar, &ReplaceBar::sigReplacebarClose, this, [=] {
+    auto cur = editor->textCursor();
+    cur.clearSelection();
+    editor->setTextCursor(cur);
+    editor->setFocus();
+  });
   vlayout->addWidget(replacebar);
-
   connect(editor, &QCodeEditor::textChanged, this, [=] { isSaved = false; });
 
+  QShortcut *s;
+
+#define ConnectShortCut(ShortCut, Slot)                                        \
+  s = new QShortcut(ShortCut, this);                                           \
+  connect(s, &QShortcut::activated, this, &Slot);
+
+  ConnectShortCut(QKeySequence::Undo, ScriptWindow::on_undo);
+  ConnectShortCut(QKeySequence::Copy, ScriptWindow::on_copy);
+  ConnectShortCut(QKeySequence::Cut, ScriptWindow::on_cut);
+  ConnectShortCut(QKeySequence::Paste, ScriptWindow::on_paste);
+  ConnectShortCut(QKeySequence::Redo, ScriptWindow::on_redo);
+  ConnectShortCut(QKeySequence::Find, ScriptWindow::on_find);
+  ConnectShortCut(QKeySequence::New, ScriptWindow::on_new);
+  ConnectShortCut(QKeySequence::Open, ScriptWindow::on_open);
+  ConnectShortCut(QKeySequence::Save, ScriptWindow::on_save);
+  ConnectShortCut(QKeySequence::SaveAs, ScriptWindow::on_saveas);
+  ConnectShortCut(QKeySequence::Replace, ScriptWindow::on_replace);
+  ConnectShortCut(scrun, ScriptWindow::on_run);
+  ConnectShortCut(scrunf, ScriptWindow::on_runfile);
+
+  QSettings settings(QApplication::organizationName(), "WingHexPy");
+  lastusedpath = settings.value("curpath").toString();
+
   Dtk::Widget::moveToCenter(this);
+}
+
+ScriptWindow::~ScriptWindow() {
+  QSettings settings(QApplication::organizationName(), "WingHexPy");
+  settings.setValue("curpath", lastusedpath);
 }
 
 void ScriptWindow::setTheme(DGuiApplicationHelper::ColorType theme) {
@@ -205,17 +370,62 @@ void ScriptWindow::setTheme(DGuiApplicationHelper::ColorType theme) {
 }
 
 void ScriptWindow::on_new() {
-  if (!isSaved) {
+  if (!isSaved && QMessageBox::question(this, tr("CloseConfirm"),
+                                        tr("NotSaved")) == QMessageBox::No) {
     return;
   }
   editor->clear();
+  currentfilename.clear();
 }
 
-void ScriptWindow::on_open() {}
+void ScriptWindow::on_open() {
+  auto filename =
+      QFileDialog::getOpenFileName(this, tr("ChooseFile"), lastusedpath);
+  if (!filename.isEmpty()) {
+    QFileInfo finfo(filename);
+    lastusedpath = finfo.absoluteDir().absolutePath();
+    QFile f(filename);
+    if (f.open(QFile::ReadOnly)) {
+      editor->setText(f.readAll());
+      currentfilename = filename;
+      f.close();
+    } else {
+      DMessageManager::instance()->sendMessage(this, ICONRES("open"),
+                                               tr("OpenFail"));
+    }
+  }
+}
 
-void ScriptWindow::on_save() {}
+void ScriptWindow::on_save() {
+  if (currentfilename.isEmpty()) {
+    on_saveas();
+    return;
+  }
+  QFile f(currentfilename);
+  if (f.open(QFile::WriteOnly)) {
+    f.write(editor->toPlainText().toUtf8());
+    f.close();
+  } else {
+    DMessageManager::instance()->sendMessage(this, ICONRES("save"),
+                                             tr("SaveFail"));
+  }
+}
 
-void ScriptWindow::on_saveas() {}
+void ScriptWindow::on_saveas() {
+  auto filename =
+      QFileDialog::getSaveFileName(this, tr("ChooseSaveFile"), lastusedpath);
+  if (filename.isEmpty())
+    return;
+  lastusedpath = QFileInfo(filename).absoluteDir().absolutePath();
+  QFile f(filename);
+  if (f.open(QFile::WriteOnly)) {
+    f.write(editor->toPlainText().toUtf8());
+    f.close();
+  } else {
+    DMessageManager::instance()->sendMessage(this, ICONRES("saveas"),
+                                             tr("SaveAsFail"));
+  }
+}
 
 void ScriptWindow::on_close() { close(); }
 
@@ -230,27 +440,38 @@ void ScriptWindow::on_cut() { editor->cut(); }
 void ScriptWindow::on_paste() { editor->paste(); }
 
 void ScriptWindow::on_run() {
-  PlgInterface::instance()->RunPyText(editor->toPlainText());
+  if (!PlgInterface::instance()->RunPyText(editor->toPlainText())) {
+    DMessageManager::instance()->sendMessage(this, ICONRES("run"),
+                                             tr("OtherScriptRunning"));
+  }
 }
 
 void ScriptWindow::on_runfile() {
   auto filename = DFileDialog::getOpenFileName(this, tr("ChoosePyScript"),
-                                               QString(), "Python (*.py)");
+                                               lastusedpath, "Python (*.py)");
   if (filename.isEmpty())
     return;
-  PlgInterface::instance()->RunPyFile(filename);
+
+  if (!PlgInterface::instance()->RunPyFile(filename)) {
+    DMessageManager::instance()->sendMessage(this, ICONRES("runf"),
+                                             tr("OtherScriptRunning"));
+  }
 }
 
 void ScriptWindow::on_find() {
   replacebar->close();
   auto cur = editor->textCursor();
-  findbar->activeInput("", "", cur.blockNumber(), cur.positionInBlock(), 0);
+  findbar->activeInput(cur.selectedText(), cur.blockNumber(),
+                       cur.positionInBlock(),
+                       editor->verticalScrollBar()->value());
 }
 
 void ScriptWindow::on_replace() {
   findbar->close();
   auto cur = editor->textCursor();
-  replacebar->activeInput("", "", cur.blockNumber(), cur.positionInBlock(), 0);
+  replacebar->activeInput(cur.selectedText(), cur.blockNumber(),
+                          cur.positionInBlock(),
+                          editor->verticalScrollBar()->value());
 }
 
 void ScriptWindow::on_about() {

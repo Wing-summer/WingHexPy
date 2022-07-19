@@ -29,34 +29,33 @@
 
 DWIDGET_USE_NAMESPACE
 
-class LineBar : public DLineEdit
-{
-    Q_OBJECT
+class LineBar : public DLineEdit {
+  Q_OBJECT
 
 public:
-    explicit LineBar(DLineEdit *parent = 0);
+  explicit LineBar(DLineEdit *parent = nullptr);
 
 public slots:
-    void handleTextChangeTimer();
-    void handleTextChanged();
-    void sendText(QString t);
+  void handleTextChangeTimer();
+  void handleTextChanged();
+  void sendText(QString t);
 
 signals:
-    void contentChanged();
-    void focusOut();
-    void pressAltEnter();
-    void pressCtrlEnter();
-    void pressEnter();
-    void pressMetaEnter();
-    void signal_sentText(QString t);
+  void contentChanged();
+  void focusOut();
+  void pressAltEnter();
+  void pressCtrlEnter();
+  void pressEnter();
+  void pressMetaEnter();
+  void signal_sentText(QString t);
 
 protected:
-    virtual void focusOutEvent(QFocusEvent *e);
-    virtual void keyPressEvent(QKeyEvent *e);
+  virtual void focusOutEvent(QFocusEvent *e);
+  virtual void keyPressEvent(QKeyEvent *e);
 
 private:
-    QTimer *m_autoSaveTimer;
-    int m_autoSaveInternal;
+  QTimer *m_autoSaveTimer;
+  int m_autoSaveInternal;
 };
 
 #endif

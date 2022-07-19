@@ -30,5 +30,6 @@
         <file>img/replace.png</file>
         <file>sponsor.png</file>
         <file>img/README.md</file>
+        <file>img/infolist.png</file>
     </qresource>
 </RCC>

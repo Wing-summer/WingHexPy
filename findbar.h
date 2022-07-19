@@ -53,8 +53,7 @@ public:
   bool isFocus();
   void focus();
 
-  void activeInput(QString text, QString file, int row, int column,
-                   int scrollOffset);
+  void activeInput(QString text, int row, int column, int scrollOffset);
   void setMismatchAlert(bool isAlert);
   void receiveText(QString t);
   void setSearched(bool _);
@@ -66,7 +65,7 @@ signals:
   void findPrev(const QString &keyword);
 
   void removeSearchKeyword();
-  void updateSearchKeyword(QString file, QString keyword);
+  void updateSearchKeyword(QString keyword);
 
   // add guoshao
   void sigFindbarClose();
@@ -89,7 +88,6 @@ private:
   LineBar *m_editLine;
   QHBoxLayout *m_layout;
   QLabel *m_findLabel;
-  QString m_findFile;
   int m_findFileColumn;
   int m_findFileRow;
   int m_findFileSrollOffset;

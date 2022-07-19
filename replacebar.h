@@ -46,23 +46,19 @@ public:
   bool isFocus();
   void focus();
 
-  void activeInput(QString text, QString file, int row, int column,
-                   int scrollOffset);
+  void activeInput(QString text, int row, int column, int scrollOffset);
   void setMismatchAlert(bool isAlert);
   void setsearched(bool _);
 
 signals:
   void pressEsc();
-  void replaceNext(QString file, QString replaceText, QString withText);
-  void replaceSkip(QString file, QString keyword);
-  void replaceRest(QString replaceText, QString withText);
+  void replaceNext(QString replaceText, QString withText);
+  void replaceSkip(QString keyword);
   void replaceAll(QString replaceText, QString withText);
-  void beforeReplace(QString _);
-
-  void backToPosition(QString file, int row, int column, int scrollOffset);
+  void backToPosition(int row, int column, int scrollOffset);
 
   void removeSearchKeyword();
-  void updateSearchKeyword(QString file, QString keyword);
+  void updateSearchKeyword(QString keyword);
 
   void sigReplacebarClose();
 
@@ -72,7 +68,6 @@ public slots:
   void handleContentChanged();
   void handleReplaceAll();
   void handleReplaceNext();
-  void handleReplaceRest();
 
 protected:
   void hideEvent(QHideEvent *event);
@@ -82,7 +77,6 @@ protected:
 private:
   QPushButton *m_replaceAllButton;
   QPushButton *m_replaceButton;
-  QPushButton *m_replaceRestButton;
   QPushButton *m_replaceSkipButton;
   DIconButton *m_closeButton;
   LineBar *m_replaceLine;
@@ -90,7 +84,6 @@ private:
   QHBoxLayout *m_layout;
   QLabel *m_replaceLabel;
   QLabel *m_withLabel;
-  QString m_replaceFile;
   int m_replaceFileColumn;
   int m_replaceFileRow;
   int m_replaceFileSrollOffset;

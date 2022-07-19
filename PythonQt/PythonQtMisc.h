@@ -1,5 +1,5 @@
-#ifndef _PYTHONQTMISC_H
-#define _PYTHONQTMISC_H
+#ifndef PYTHONQTMISC_H
+#define PYTHONQTMISC_H
 
 /*
  *
@@ -42,61 +42,63 @@
 */
 //----------------------------------------------------------------------------------
 
-
 #include <QList>
 
-#define PythonQtValueStorage_ADD_VALUE(store, type, value, ptr) \
-{  type* item = (type*)store.nextValuePtr(); \
-   *item = value; \
-   ptr = (void*)item; \
-}
+#define PythonQtValueStorage_ADD_VALUE(store, type, value, ptr)                \
+  {                                                                            \
+    type *item = (type *)store.nextValuePtr();                                 \
+    *item = value;                                                             \
+    ptr = (void *)item;                                                        \
+  }
 
-#define PythonQtValueStorage_ADD_VALUE_IF_NEEDED(alreadyAllocatedPtr,store, type, value, ptr) \
-{ \
-  type* item = (type*)(alreadyAllocatedPtr?alreadyAllocatedPtr:store.nextValuePtr()); \
-  *item = value; \
-  ptr = (void*)item; \
-}
+#define PythonQtValueStorage_ADD_VALUE_IF_NEEDED(alreadyAllocatedPtr, store,   \
+                                                 type, value, ptr)             \
+  {                                                                            \
+    type *item = (type *)(alreadyAllocatedPtr ? alreadyAllocatedPtr            \
+                                              : store.nextValuePtr());         \
+    *item = value;                                                             \
+    ptr = (void *)item;                                                        \
+  }
 
 //! stores a position in the PythonQtValueStorage
 class PythonQtValueStoragePosition {
 
 public:
-  PythonQtValueStoragePosition() { chunkIdx = 0; chunkOffset = 0; }
+  PythonQtValueStoragePosition() {
+    chunkIdx = 0;
+    chunkOffset = 0;
+  }
 
   int chunkIdx;
   int chunkOffset;
-
 };
 
 //! a helper class that stores basic C++ value types in chunks
-template <typename T, int chunkEntries> class PythonQtValueStorage
-{
+template <typename T, int chunkEntries> class PythonQtValueStorage {
 public:
   PythonQtValueStorage() {
-    _chunkIdx  = 0;
+    _chunkIdx = 0;
     _chunkOffset = 0;
     _currentChunk = new T[chunkEntries];
     _chunks.append(_currentChunk);
-  };
+  }
 
   //! clear all memory
   void clear() {
-    T* chunk;
-    Q_FOREACH(chunk, _chunks) {
-      delete[]chunk;
-    }
+    T *chunk;
+    Q_FOREACH (chunk, _chunks) { delete[] chunk; }
     _chunks.clear();
   }
 
   //! get the current position to be restored with setPos
-  void getPos(PythonQtValueStoragePosition & pos) {
+  void getPos(PythonQtValueStoragePosition &pos) {
     pos.chunkIdx = _chunkIdx;
     pos.chunkOffset = _chunkOffset;
   }
 
-  //! set the current position (without freeing memory, thus caching old entries for reuse)
-  void setPos(const PythonQtValueStoragePosition& pos) {
+  //! set the current position (without freeing memory, thus caching old entries
+  //! for reuse)
+  void setPos(const PythonQtValueStoragePosition &pos) {
     _chunkOffset = pos.chunkOffset;
     if (_chunkIdx != pos.chunkIdx) {
       _chunkIdx = pos.chunkIdx;
@@ -105,11 +107,11 @@ public:
   }
 
   //! add one default constructed value and return the pointer to it
-  T* nextValuePtr() {
-    if (_chunkOffset>=chunkEntries) {
+  T *nextValuePtr() {
+    if (_chunkOffset >= chunkEntries) {
       _chunkIdx++;
       if (_chunkIdx >= _chunks.size()) {
-        T* newChunk = new T[chunkEntries];
+        T *newChunk = new T[chunkEntries];
         _chunks.append(newChunk);
         _currentChunk = newChunk;
       } else {
@@ -117,47 +119,48 @@ public:
       }
       _chunkOffset = 0;
     }
-    T* newEntry = _currentChunk + _chunkOffset;
+    T *newEntry = _currentChunk + _chunkOffset;
     _chunkOffset++;
     return newEntry;
-  };
+  }
 
 protected:
-  QList<T*> _chunks;
+  QList<T *> _chunks;
 
   int _chunkIdx;
   int _chunkOffset;
-  T*  _currentChunk;
-
+  T *_currentChunk;
 };
 
-//! a helper class that stores basic C++ value types in chunks and clears the unused values on setPos() usage.
-template <typename T, int chunkEntries> class PythonQtValueStorageWithCleanup : public PythonQtValueStorage<T, chunkEntries>
-{  
+//! a helper class that stores basic C++ value types in chunks and clears the
+//! unused values on setPos() usage.
+template <typename T, int chunkEntries>
+class PythonQtValueStorageWithCleanup
+    : public PythonQtValueStorage<T, chunkEntries> {
 public:
-  void setPos(const PythonQtValueStoragePosition& pos) {
+  void setPos(const PythonQtValueStoragePosition &pos) {
     if (_chunkIdx > pos.chunkIdx) {
-      T*  firstChunk = _chunks.at(pos.chunkIdx);
+      T *firstChunk = _chunks.at(pos.chunkIdx);
       // clear region in first chunk
       for (int i = pos.chunkOffset; i < chunkEntries; i++) {
         firstChunk[i] = T();
       }
       for (int chunk = pos.chunkIdx + 1; chunk < _chunkIdx; chunk++) {
         // clear the full chunks between the first and last chunk
-        T*  fullChunk = _chunks.at(chunk);
+        T *fullChunk = _chunks.at(chunk);
         for (int i = 0; i < chunkEntries; i++) {
           fullChunk[i] = T();
         }
       }
       // clear region in last chunk
-      T*  lastChunk = _chunks.at(_chunkIdx);
+      T *lastChunk = _chunks.at(_chunkIdx);
       for (int i = 0; i < _chunkOffset; i++) {
         lastChunk[i] = T();
       }
     } else if (_chunkIdx == pos.chunkIdx) {
       // clear the region in the last chunk only
-      T*  lastChunk = _chunks.at(_chunkIdx);
-      for (int i = pos.chunkOffset; i<_chunkOffset; i++) {
+      T *lastChunk = _chunks.at(_chunkIdx);
+      for (int i = pos.chunkOffset; i < _chunkOffset; i++) {
         lastChunk[i] = T();
       }
     }
