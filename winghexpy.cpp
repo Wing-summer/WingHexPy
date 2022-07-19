@@ -2,6 +2,8 @@
 #include "scriptwindow.h"
 #include <QFileDialog>
 
+#define ICONRES(name) QIcon(":/img/" name ".png")
+
 WingHexPy::WingHexPy(QObject *parent) { Q_UNUSED(parent) }
 
 WingHexPy::~WingHexPy() {}
@@ -49,7 +51,7 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
 
   PluginToolBarInitBegin(tb, "WingHexPy") {
     PluginToolBarAddLamba(
-        tb, QIcon(":/img/pys.png"), [=] { ScriptWindow::instance()->show(); },
+        tb, ICONRES("pys"), [=] { ScriptWindow::instance()->show(); },
         tr("ScriptWindow"));
   }
   PluginToolBarInitEnd();

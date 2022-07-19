@@ -74,26 +74,37 @@ class InfoListWrapper : public QObject {
 public:
   InfoListWrapper() {}
   InfoListWrapper(QListWidget *list) : m_list(list) {}
-
-  void addItem(QString content) { m_list.addItem(content); }
-  void addIconItem(QIcon icon, QString content) {
-    m_list.addItem(new QListWidgetItem(icon, content));
+public slots:
+  void addItem(QString content) {
+    if (m_list)
+      m_list->addItem(content);
   }
-  void clear() { m_list.clear(); }
+  void addIconItem(QIcon icon, QString content) {
+    if (m_list)
+      m_list->addItem(new QListWidgetItem(icon, content));
+  }
+  void clear() {
+    if (m_list)
+      m_list->clear();
+  }
   void insertItem(int index, QString content) {
-    m_list.insertItem(index, content);
+    if (m_list)
+      m_list->insertItem(index, content);
   }
   void insertIconItem(int index, QIcon icon, QString content) {
-    m_list.insertItem(index, new QListWidgetItem(icon, content));
+    if (m_list)
+      m_list->insertItem(index, new QListWidgetItem(icon, content));
   }
   void removeAt(int index) {
-    auto item = m_list.item(index);
-    m_list.removeItemWidget(item);
-    delete item;
+    if (m_list) {
+      auto item = m_list->item(index);
+      m_list->removeItemWidget(item);
+      delete item;
+    }
   }
 
 private:
-  QListWidget m_list;
+  QListWidget *m_list;
 };
 
 class InfoTableWrapper : public QObject {
@@ -101,36 +112,66 @@ class InfoTableWrapper : public QObject {
 public:
   InfoTableWrapper() {}
   InfoTableWrapper(QTableWidget *table) : m_table(table) {}
-
-  void setColumnCount(int count) { m_table->setColumnCount(count); }
-  void setRowCount(int count) { m_table->setRowCount(count); }
-  void setRowHeight(int row, int height) { m_table->setRowHeight(row, height); }
+public slots:
+  void setColumnCount(int count) {
+    if (m_table)
+      m_table->setColumnCount(count);
+  }
+  void setRowCount(int count) {
+    if (m_table)
+      m_table->setRowCount(count);
+  }
+  void setRowHeight(int row, int height) {
+    if (m_table)
+      m_table->setRowHeight(row, height);
+  }
   void setColumnWidth(int col, int width) {
     m_table->setColumnWidth(col, width);
   }
-  void clear() { m_table->clear(); }
-  void clearContents() { m_table->clearContents(); }
+  void clear() {
+    if (m_table)
+      m_table->clear();
+  }
+  void clearContents() {
+    if (m_table)
+      m_table->clearContents();
+  }
   void setItem(int row, int col, QString content) {
-    m_table->setItem(row, col, new QTableWidgetItem(content));
+    if (m_table)
+      m_table->setItem(row, col, new QTableWidgetItem(content));
   }
   void setIconItem(int row, int col, QIcon icon, QString content) {
-    m_table->setItem(row, col, new QTableWidgetItem(icon, content));
+    if (m_table)
+      m_table->setItem(row, col, new QTableWidgetItem(icon, content));
   }
-  void hideRow(int row) { m_table->hideRow(row); }
-  void hideCol(int col) { m_table->hideColumn(col); }
+  void hideRow(int row) {
+    if (m_table)
+      m_table->hideRow(row);
+  }
+  void hideCol(int col) {
+    if (m_table)
+      m_table->hideColumn(col);
+  }
   void setHorizontalHeaderLabels(QStringList lbls) {
-    m_table->setHorizontalHeaderLabels(lbls);
+    if (m_table)
+      m_table->setHorizontalHeaderLabels(lbls);
   }
   void setVerticalHeaderLabels(QStringList lbls) {
-    m_table->setVerticalHeaderLabels(lbls);
+    if (m_table)
+      m_table->setVerticalHeaderLabels(lbls);
   }
   void setHorizontalHeaderLabel(int index, QString lbl) {
-    m_table->setHorizontalHeaderItem(index, new QTableWidgetItem(lbl));
+    if (m_table)
+      m_table->setHorizontalHeaderItem(index, new QTableWidgetItem(lbl));
   }
   void setVerticalHeaderLabel(int index, QString lbl) {
-    m_table->setVerticalHeaderItem(index, new QTableWidgetItem(lbl));
+    if (m_table)
+      m_table->setVerticalHeaderItem(index, new QTableWidgetItem(lbl));
   }
-  void setCurrentCell(int row, int col) { m_table->setCurrentCell(row, col); }
+  void setCurrentCell(int row, int col) {
+    if (m_table)
+      m_table->setCurrentCell(row, col);
+  }
 
 private:
   QTableWidget *m_table;
@@ -141,6 +182,51 @@ class InfoTreeWrapper : public QObject {
 public:
   InfoTreeWrapper() {}
   InfoTreeWrapper(QTreeWidget *tree) : m_tree(tree) {}
+public slots:
+  void clear() {
+    if (m_tree)
+      m_tree->clear();
+  }
+  void expandAll() {
+    if (m_tree)
+      m_tree->expandAll();
+  }
+  QTreeWidgetItem *addItem(QTreeWidget *parent, QStringList contents) {
+    try {
+      if (m_tree) {
+        if (parent)
+          return new QTreeWidgetItem(parent, contents);
+        return new QTreeWidgetItem(m_tree, contents);
+      }
+      return nullptr;
+    } catch (...) {
+      return nullptr;
+    }
+  }
+  QTreeWidgetItem *addItem(QTreeWidgetItem *parent, QStringList contents) {
+    try {
+      if (m_tree) {
+        if (parent)
+          return new QTreeWidgetItem(parent, contents);
+        return new QTreeWidgetItem(m_tree, contents);
+      }
+      return nullptr;
+    } catch (...) {
+      return nullptr;
+    }
+  }
+  void remove(QTreeWidgetItem *item) {
+    if (m_tree)
+      m_tree->removeItemWidget(item, 0);
+  }
+  void setHeaderLabel(QString &label) {
+    if (m_tree)
+      m_tree->setHeaderLabel(label);
+  }
+  void setHeaderLabels(const QStringList &labels) {
+    if (m_tree)
+      m_tree->setHeaderLabels(labels);
+  }
 
 private:
   QTreeWidget *m_tree;

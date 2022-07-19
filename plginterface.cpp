@@ -10,7 +10,6 @@ PlgInterface *PlgInterface::m_instace = nullptr;
 bool PlgInterface::init() {
   PythonQt::init(PythonQt::IgnoreSiteModule | PythonQt::RedirectStdOut);
   auto py = PythonQt::self();
-  py->addDecorators(new PyInfoDecorators(this));
   py->registerClass(&QListWidget::staticMetaObject, "QtGui");
   py->registerClass(&QTableWidget::staticMetaObject, "QtGui");
   py->registerClass(&QTreeWidget::staticMetaObject, "QtGui");
@@ -20,6 +19,12 @@ bool PlgInterface::init() {
                        PythonQtCreateObject<WingPlugin::Controller>);
   py->registerCPPClass("plgservice", nullptr, "wingplg",
                        PythonQtCreateObject<PlgService>);
+  py->registerCPPClass("infolistwrapper", nullptr, "wingplg",
+                       PythonQtCreateObject<InfoListWrapper>);
+  py->registerCPPClass("infotreewrapper", nullptr, "wingplg",
+                       PythonQtCreateObject<InfoTreeWrapper>);
+  py->registerCPPClass("infotablewrapper", nullptr, "wingplg",
+                       PythonQtCreateObject<InfoTableWrapper>);
 
   qRegisterMetaType<HexPosition>("hexposition");
   qRegisterMetaType<BookMark>("bookmark");
@@ -48,6 +53,10 @@ void PlgInterface::initInfo(QListWidget *infolist, QTreeWidget *infotree,
   mainContext.addObject("infotree", infotree);
   mainContext.addObject("infotable", infotable);
   mainContext.addObject("infolist", infolist);
+
+  mainContext.addObject("treewrapper", new InfoTreeWrapper(infotree));
+  mainContext.addObject("tablewrapper", new InfoTableWrapper(infotable));
+  mainContext.addObject("listwrapper", new InfoListWrapper(infolist));
 }
 
 PythonQtScriptingConsole *PlgInterface::getScriptingConsole() {
