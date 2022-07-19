@@ -13,6 +13,7 @@ bool PlgInterface::init() {
   py->registerClass(&QListWidget::staticMetaObject, "QtGui");
   py->registerClass(&QTableWidget::staticMetaObject, "QtGui");
   py->registerClass(&QTreeWidget::staticMetaObject, "QtGui");
+  py->registerClass(&QTextBrowser::staticMetaObject, "QtGui");
   py->registerCPPClass("plgreader", nullptr, "wingplg",
                        PythonQtCreateObject<WingPlugin::Reader>);
   py->registerCPPClass("plgcontroller", nullptr, "wingplg",
@@ -49,10 +50,11 @@ bool PlgInterface::init() {
 }
 
 void PlgInterface::initInfo(QListWidget *infolist, QTreeWidget *infotree,
-                            QTableWidget *infotable) {
+                            QTableWidget *infotable, QTextBrowser *infotxt) {
   mainContext.addObject("infotree", infotree);
   mainContext.addObject("infotable", infotable);
   mainContext.addObject("infolist", infolist);
+  mainContext.addObject("infotxt", infotxt);
 
   mainContext.addObject("treewrapper", new InfoTreeWrapper(infotree));
   mainContext.addObject("tablewrapper", new InfoTableWrapper(infotable));

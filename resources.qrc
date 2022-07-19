@@ -31,5 +31,12 @@
         <file>sponsor.png</file>
         <file>img/README.md</file>
         <file>img/infolist.png</file>
+        <file>img/infotable.png</file>
+        <file>img/infotree.png</file>
+        <file>img/infotxt.png</file>
+        <file>img/writable.png</file>
+        <file>img/unsaved.png</file>
+        <file>img/saved.png</file>
+        <file>img/readonly.png</file>
     </qresource>
 </RCC>

@@ -10,6 +10,7 @@
 #include <QMutex>
 #include <QObject>
 #include <QTableWidget>
+#include <QTextBrowser>
 #include <QTreeWidget>
 
 #define INFOLOG(msg) "<font color=\"green\">" + msg + "</font>"
@@ -27,7 +28,7 @@ signals:
 public:
   bool init();
   void initInfo(QListWidget *infolist, QTreeWidget *infotree,
-                QTableWidget *infotable);
+                QTableWidget *infotable, QTextBrowser *infotxt);
   PythonQtScriptingConsole *getScriptingConsole();
   bool RunPyFile(QString filename);
   bool RunPyText(QString content);

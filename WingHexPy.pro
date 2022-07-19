@@ -40,8 +40,7 @@ SOURCES += \
     linebar.cpp \
     replacebar.cpp \
     aboutsoftwaredialog.cpp \
-    sponsordialog.cpp \
-    jumplinebar.cpp
+    sponsordialog.cpp
 
 HEADERS += \
     winghexpy.h \
@@ -89,8 +88,7 @@ HEADERS += \
     linebar.h \
     replacebar.h \
     aboutsoftwaredialog.h \
-    sponsordialog.h \
-    jumplinebar.h
+    sponsordialog.h
 
 DISTFILES += WingHexPy.json \ 
     img/infotable.png \

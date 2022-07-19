@@ -51,10 +51,14 @@ private:
   PythonQtScriptingConsole *txt;
 
 private:
-  QDockWidget *dlist, *dtree, *dtable;
+  QDockWidget *dlist, *dtree, *dtable, *dtxt;
   QListWidget *infolist;
   QTreeWidget *infotree;
   QTableWidget *infotable;
+  QTextBrowser *infotxt;
+
+private:
+  void runPyFile();
 };
 
 #endif // GENERICPLUGIN_H

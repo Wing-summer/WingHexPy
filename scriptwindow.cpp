@@ -1,10 +1,11 @@
-#include "scriptwindow.h"
+﻿#include "scriptwindow.h"
 #include "../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
 #include "QCodeEditor/QPythonHighlighter.hpp"
 #include "aboutsoftwaredialog.h"
 #include "plginterface.h"
 #include "sponsordialog.h"
 #include <DFileDialog>
+#include <DInputDialog>
 #include <DMessageManager>
 #include <DTitlebar>
 #include <DWidgetUtil>
@@ -64,6 +65,7 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
   auto scrun = QKeySequence(Qt::Key_F5);
   auto scrunf =
       QKeySequence(Qt::KeyboardModifier::ControlModifier | Qt::Key_F5);
+  auto scgoto = QKeySequence(Qt::KeyboardModifier::ControlModifier | Qt::Key_G);
 
   PluginMenuInitBegin(menu, "") {
     Q_UNUSED(a);
@@ -133,6 +135,10 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
                                   ScriptWindow::on_replace);
       a->setShortcut(QKeySequence::Replace);
       a->setShortcutVisibleInContextMenu(true);
+      PluginMenuAddItemIconAction(m, tr("Goto"), ICONRES("jmp"),
+                                  ScriptWindow::on_jmp);
+      a->setShortcut(scgoto);
+      a->setShortcutVisibleInContextMenu(true);
     }
     PluginMenuInitEnd();
     menu->addMenu(m);
@@ -195,6 +201,8 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
                            tr("Find"));
     PluginToolBarAddAction(toolbar, ICONRES("replace"),
                            ScriptWindow::on_replace, tr("Replace"));
+    PluginToolBarAddAction(toolbar, ICONRES("jmp"), ScriptWindow::on_jmp,
+                           tr("Goto"));
     toolbar->addSeparator();
     PluginToolBarAddAction(toolbar, ICONRES("run"), ScriptWindow::on_run,
                            tr("Run"));
@@ -211,6 +219,50 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
   addToolBar(toolbar);
 
   status = new DStatusBar(this);
+
+#define LoadPixMap(Var, Icon) Var.load(":/images/" Icon ".png");
+
+  DLabel *l;
+
+#define AddNamedStatusLabel(Var, Content)                                      \
+  Var = new DLabel(this);                                                      \
+  Var->setText(Content);                                                       \
+  status->addWidget(Var);
+
+#define AddStatusLabel(Content) AddNamedStatusLabel(l, Content)
+
+#define AddStausILable(PixMap, Icon, Label, OPixMap, OIcon)                    \
+  LoadPixMap(PixMap, Icon);                                                    \
+  LoadPixMap(OPixMap, OIcon);                                                  \
+  Label = new DLabel(this);                                                    \
+  Label->setPixmap(PixMap);                                                    \
+  Label->setScaledContents(true);                                              \
+  Label->setFixedSize(20, 20);                                                 \
+  Label->setAlignment(Qt::AlignCenter);                                        \
+  status->addPermanentWidget(Label);                                           \
+  AddStatusLabel(QString(' '));
+
+  AddStatusLabel(tr("row:"));
+  l->setMinimumWidth(50);
+  l->setAlignment(Qt::AlignCenter);
+  AddNamedStatusLabel(lblrow, "1");
+
+  AddStatusLabel(tr("col:"));
+  l->setMinimumWidth(50);
+  l->setAlignment(Qt::AlignCenter);
+  AddNamedStatusLabel(lblcol, "1");
+
+  AddStatusLabel(tr("len:"));
+  l->setMinimumWidth(50);
+  l->setAlignment(Qt::AlignCenter);
+  AddNamedStatusLabel(lbllen, "0");
+
+  AddStausILable(infoSaved, "saved", iSaved, infoUnsaved, "unsaved");
+  iSaved->setToolTip(tr("InfoSave"));
+  AddStausILable(infoWriteable, "writable", iReadWrite, infoReadonly,
+                 "readonly");
+  iReadWrite->setToolTip(tr("InfoReadWrite"));
+
   setStatusBar(status);
 
   connect(editor, &QCodeEditor::undoAvailable, this, [=](bool b) {
@@ -220,6 +272,15 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
   connect(editor, &QCodeEditor::redoAvailable, this, [=](bool b) {
     aredo->setEnabled(b);
     mredo->setEnabled(b);
+  });
+  connect(editor, &QCodeEditor::cursorPositionChanged, this, [=] {
+    auto cur = editor->textCursor();
+    lblrow->setText(QString::number(cur.blockNumber() + 1));
+    lblcol->setText(QString::number(cur.columnNumber() + 1));
+  });
+  connect(editor, &QCodeEditor::selectionChanged, this, [=] {
+    auto cur = editor->textCursor();
+    lbllen->setText(QString::number(cur.selectionEnd() - cur.selectionStart()));
   });
 
   findbar = new FindBar(this);
@@ -328,7 +389,10 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
     editor->setFocus();
   });
   vlayout->addWidget(replacebar);
-  connect(editor, &QCodeEditor::textChanged, this, [=] { isSaved = false; });
+  connect(editor, &QCodeEditor::textChanged, this, [=] {
+    if (isSaved)
+      this->setSaved(false);
+  });
 
   QShortcut *s;
 
@@ -349,6 +413,7 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
   ConnectShortCut(QKeySequence::Replace, ScriptWindow::on_replace);
   ConnectShortCut(scrun, ScriptWindow::on_run);
   ConnectShortCut(scrunf, ScriptWindow::on_runfile);
+  ConnectShortCut(scgoto, ScriptWindow::on_jmp);
 
   QSettings settings(QApplication::organizationName(), "WingHexPy");
   lastusedpath = settings.value("curpath").toString();
@@ -369,6 +434,11 @@ void ScriptWindow::setTheme(DGuiApplicationHelper::ColorType theme) {
   }
 }
 
+void ScriptWindow::setSaved(bool b) {
+  isSaved = b;
+  iSaved->setPixmap(b ? infoSaved : infoUnsaved);
+}
+
 void ScriptWindow::on_new() {
   if (!isSaved && QMessageBox::question(this, tr("CloseConfirm"),
                                         tr("NotSaved")) == QMessageBox::No) {
@@ -376,19 +446,24 @@ void ScriptWindow::on_new() {
   }
   editor->clear();
   currentfilename.clear();
+  iReadWrite->setPixmap(infoWriteable);
 }
 
 void ScriptWindow::on_open() {
-  auto filename =
-      QFileDialog::getOpenFileName(this, tr("ChooseFile"), lastusedpath);
+  auto filename = QFileDialog::getOpenFileName(this, tr("ChooseFile"),
+                                               lastusedpath, "Python (*.py)");
   if (!filename.isEmpty()) {
     QFileInfo finfo(filename);
     lastusedpath = finfo.absoluteDir().absolutePath();
+    iReadWrite->setPixmap(finfo.permission(QFile::Permission::WriteUser)
+                              ? infoWriteable
+                              : infoReadonly);
     QFile f(filename);
     if (f.open(QFile::ReadOnly)) {
       editor->setText(f.readAll());
       currentfilename = filename;
       f.close();
+      setSaved(true);
     } else {
       DMessageManager::instance()->sendMessage(this, ICONRES("open"),
                                                tr("OpenFail"));
@@ -405,6 +480,7 @@ void ScriptWindow::on_save() {
   if (f.open(QFile::WriteOnly)) {
     f.write(editor->toPlainText().toUtf8());
     f.close();
+    setSaved(true);
   } else {
     DMessageManager::instance()->sendMessage(this, ICONRES("save"),
                                              tr("SaveFail"));
@@ -412,8 +488,8 @@ void ScriptWindow::on_save() {
 }
 
 void ScriptWindow::on_saveas() {
-  auto filename =
-      QFileDialog::getSaveFileName(this, tr("ChooseSaveFile"), lastusedpath);
+  auto filename = QFileDialog::getSaveFileName(this, tr("ChooseSaveFile"),
+                                               lastusedpath, "Python (*.py)");
   if (filename.isEmpty())
     return;
   lastusedpath = QFileInfo(filename).absoluteDir().absolutePath();
@@ -421,6 +497,8 @@ void ScriptWindow::on_saveas() {
   if (f.open(QFile::WriteOnly)) {
     f.write(editor->toPlainText().toUtf8());
     f.close();
+    setSaved(true);
+    iReadWrite->setPixmap(infoWriteable);
   } else {
     DMessageManager::instance()->sendMessage(this, ICONRES("saveas"),
                                              tr("SaveAsFail"));
@@ -472,6 +550,19 @@ void ScriptWindow::on_replace() {
   replacebar->activeInput(cur.selectedText(), cur.blockNumber(),
                           cur.positionInBlock(),
                           editor->verticalScrollBar()->value());
+}
+
+void ScriptWindow::on_jmp() {
+  auto cur = editor->textCursor();
+  auto ok = false;
+  auto pos = DInputDialog::getInt(this, tr("Goto"), tr("Line"), 1, 1,
+                                  cur.blockNumber(), 1, &ok);
+  if (ok) {
+    auto p = editor->document()->findBlockByLineNumber(pos - 1).position();
+    cur.setPosition(p);
+    editor->setTextCursor(cur);
+  }
+  editor->setFocus();
 }
 
 void ScriptWindow::on_about() {

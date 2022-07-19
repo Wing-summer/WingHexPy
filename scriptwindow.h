@@ -4,10 +4,10 @@
 #include "QCodeEditor/QCodeEditor.hpp"
 #include "QCodeEditor/QSyntaxStyle.hpp"
 #include "findbar.h"
-#include "jumplinebar.h"
 #include "recentfilemanager.h"
 #include "replacebar.h"
 #include <DGuiApplicationHelper>
+#include <DLabel>
 #include <DMainWindow>
 #include <DStatusBar>
 #include <DToolBar>
@@ -45,6 +45,9 @@ private:
   void on_about();
   void on_find();
   void on_replace();
+  void on_jmp();
+
+  void setSaved(bool b);
 
 private:
   QCodeEditor *editor;
@@ -59,13 +62,25 @@ private:
   QVBoxLayout *vlayout;
   FindBar *findbar;
   ReplaceBar *replacebar;
-  JumpLineBar *jmpbar;
   QIcon picon;
 
 private:
   bool isSaved = true;
   QString lastusedpath;
   QString currentfilename;
+
+private:
+  QPixmap infoSaved;
+  QPixmap infoUnsaved;
+  QPixmap infoReadonly;
+  QPixmap infoWriteable;
+
+  DLabel *iReadWrite;
+  DLabel *iSaved;
+
+  DLabel *lblrow;
+  DLabel *lblcol;
+  DLabel *lbllen;
 };
 
 #endif // SCRIPTWINDOW_H
