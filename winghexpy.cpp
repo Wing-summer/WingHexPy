@@ -2,7 +2,9 @@
 #include "aboutsoftwaredialog.h"
 #include "scriptwindow.h"
 #include "sponsordialog.h"
+#include <QApplication>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #define ICONRES(name) QIcon(":/img/" name ".png")
 
@@ -20,6 +22,15 @@ QString WingHexPy::signature() { return WINGSUMMER; }
 
 bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
   Q_UNUSED(loadedplugin);
+
+  auto translator = new QTranslator(this);
+
+  auto s = GETPLUGINQM("WingHexPy.qm");
+  if (!translator->load(s) || !QApplication::installTranslator(translator)) {
+    QMessageBox::critical(nullptr, "Error", "Error Loading Translation File!",
+                          QMessageBox::Ok);
+    return false;
+  }
 
   plgint = new PlgInterface(this);
   if (!plgint->init()) {
@@ -41,17 +52,18 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
 
   infolist = new QListWidget;
   PluginDockWidgetInit(dlist, infolist, tr("InfoList"), "WingHexPyInfoList");
-  dlist->setMinimumSize(500, 200);
+  dlist->setMinimumSize(600, 200);
   infotree = new QTreeWidget;
+  infotree->setHeaderLabel("");
   PluginDockWidgetInit(dtree, infotree, tr("InfoTree"), "WingHexPyInfoTree");
-  dtree->setMinimumSize(500, 200);
+  dtree->setMinimumSize(600, 200);
   infotable = new QTableWidget;
   PluginDockWidgetInit(dtable, infotable, tr("InfoTable"),
                        "WingHexPyInfoTable");
-  dtable->setMinimumSize(500, 200);
+  dtable->setMinimumSize(600, 200);
   infotxt = new QTextBrowser;
   PluginDockWidgetInit(dtxt, infotxt, tr("InfoTxt"), "WingHexPyInfoTxt");
-  dtxt->setMinimumSize(500, 200);
+  dtxt->setMinimumSize(600, 200);
 
   plgint->initInfo(infolist, infotree, infotable, infotxt);
 

@@ -130,7 +130,7 @@ PythonQt is distributed under the LGPL 2.1 license.
 ## 效果图
 
 <p align="center">
-<img alt="效果图" src="">
+<img alt="效果图" src="screenshot.png">
 <p align="center">WingHexPy</p>
 </p>
 
