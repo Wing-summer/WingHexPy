@@ -159,4 +159,4 @@ PythonQt is distributed under the LGPL 2.1 license.
 
 ## WIKI
 
-> 插件完成后建设
+&emsp;&emsp;WIKI 建设完毕，想学习脚本编写的话请看 [教程](https://code.gitlink.org.cn/wingsummer/WingHexPy/wiki/%E6%95%99%E7%A8%8B) 。
