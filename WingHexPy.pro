@@ -98,7 +98,8 @@ DISTFILES += WingHexPy.json \
     img/infotable.png \
     img/infotree.png \
     img/infotxt.png \
-    img/pydb.png
+    img/pydb.png \
+    img/wiki.png
 
 TRANSLATIONS += \
     $$PWD/WingHexPy.ts

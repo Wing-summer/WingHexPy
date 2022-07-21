@@ -116,7 +116,7 @@
 <context>
     <name>ScriptManager</name>
     <message>
-        <location filename="scriptmanager.cpp" line="72"/>
+        <location filename="scriptmanager.cpp" line="75"/>
         <source>NoScript</source>
         <translation>暂无脚本</translation>
     </message>
@@ -363,84 +363,89 @@
 <context>
     <name>WingHexPy</name>
     <message>
-        <location filename="winghexpy.cpp" line="44"/>
-        <location filename="winghexpy.cpp" line="174"/>
+        <location filename="winghexpy.cpp" line="45"/>
+        <location filename="winghexpy.cpp" line="183"/>
         <source>WingHexPy</source>
         <translation>WingHexPy</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="46"/>
+        <location filename="winghexpy.cpp" line="47"/>
         <source>ScriptEditor</source>
         <translation>脚本编辑器</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="48"/>
-        <location filename="winghexpy.cpp" line="104"/>
+        <location filename="winghexpy.cpp" line="49"/>
+        <location filename="winghexpy.cpp" line="105"/>
         <source>Run File</source>
         <translation>从文件执行</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="50"/>
-        <location filename="winghexpy.cpp" line="92"/>
+        <location filename="winghexpy.cpp" line="51"/>
+        <location filename="winghexpy.cpp" line="93"/>
         <source>Database</source>
         <translation>脚本库</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="55"/>
+        <location filename="winghexpy.cpp" line="56"/>
         <source>Script</source>
         <translation>脚本</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="63"/>
+        <location filename="winghexpy.cpp" line="64"/>
         <source>Console</source>
         <translation>控制台</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="66"/>
-        <location filename="winghexpy.cpp" line="111"/>
+        <location filename="winghexpy.cpp" line="67"/>
+        <location filename="winghexpy.cpp" line="112"/>
         <source>InfoList</source>
         <translation>信息列表</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="70"/>
-        <location filename="winghexpy.cpp" line="125"/>
+        <location filename="winghexpy.cpp" line="71"/>
+        <location filename="winghexpy.cpp" line="126"/>
         <source>InfoTree</source>
         <translation>树信息列表</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="73"/>
-        <location filename="winghexpy.cpp" line="118"/>
+        <location filename="winghexpy.cpp" line="74"/>
+        <location filename="winghexpy.cpp" line="119"/>
         <source>InfoTable</source>
         <translation>信息表格</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="77"/>
-        <location filename="winghexpy.cpp" line="132"/>
+        <location filename="winghexpy.cpp" line="78"/>
+        <location filename="winghexpy.cpp" line="133"/>
         <source>InfoTxt</source>
         <translation>信息文本浏览</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="85"/>
+        <location filename="winghexpy.cpp" line="86"/>
         <source>ScriptWindow</source>
         <translation>脚本窗口</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="140"/>
+        <location filename="winghexpy.cpp" line="141"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="147"/>
+        <location filename="winghexpy.cpp" line="148"/>
         <source>Sponsor</source>
         <translation>赞助</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="155"/>
+        <location filename="winghexpy.cpp" line="156"/>
+        <source>Wiki</source>
+        <translation>网页 Wiki</translation>
+    </message>
+    <message>
+        <location filename="winghexpy.cpp" line="164"/>
         <source>ChooseFile</source>
         <translation>选择文件</translation>
     </message>
     <message>
-        <location filename="winghexpy.cpp" line="179"/>
+        <location filename="winghexpy.cpp" line="188"/>
         <source>A useful plugin for python3.7 support.</source>
         <translation>一个十分有用的 Python 3.7 的支持插件。</translation>
     </message>

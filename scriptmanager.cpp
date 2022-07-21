@@ -16,6 +16,9 @@ ScriptManager *ScriptManager::instance() {
 ScriptManager::ScriptManager(QObject *parent) : QObject(parent) {
   auto dir = PLUGINDIR + "/winghexpys";
   QDir pdir(dir);
+  if (!pdir.exists()) {
+    return;
+  }
   pdir.setFilter(QDir::Filter::Dirs);
   auto fdirs = pdir.entryInfoList();
   for (auto folder : fdirs) {

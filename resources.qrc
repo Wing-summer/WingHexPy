@@ -40,5 +40,6 @@
         <file>img/readonly.png</file>
         <file>img/pydb.png</file>
         <file>img/py.png</file>
+        <file>img/wiki.png</file>
     </qresource>
 </RCC>

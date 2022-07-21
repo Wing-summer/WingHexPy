@@ -4,6 +4,7 @@
 #include "scriptwindow.h"
 #include "sponsordialog.h"
 #include <QApplication>
+#include <QDesktopServices>
 #include <QFileDialog>
 #include <QMessageBox>
 
@@ -138,6 +139,14 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
           d.exec();
         },
         tr("About"));
+    PluginToolBarAddLamba(
+        tb, ICONRES("wiki"),
+        [=] {
+          QDesktopServices::openUrl(
+              QUrl("https://code.gitlink.org.cn/wingsummer/WingHexPy/wiki/"
+                   "%E6%95%99%E7%A8%8B"));
+        },
+        tr("Wiki"));
     PluginToolBarAddLamba(
         tb, ICONRES("sponsor"),
         [=] {
