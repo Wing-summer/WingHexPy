@@ -1,5 +1,6 @@
 #include "winghexpy.h"
 #include "aboutsoftwaredialog.h"
+#include "scriptcenterwindow.h"
 #include "scriptwindow.h"
 #include "sponsordialog.h"
 #include <QApplication>
@@ -38,12 +39,23 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
   }
   connect(plgint, &PlgInterface::log, this, &WingHexPy::log);
 
+  smanager = ScriptManager::instance();
+
   PluginMenuInitBegin(menu, tr("WingHexPy")) {
     menu->setIcon(ICONRES("icon"));
     PluginMenuAddItemIconLamba(menu, tr("ScriptEditor"), ICONRES("pys"),
                                [=] { ScriptWindow::instance()->show(); });
     PluginMenuAddItemIconAction(menu, tr("Run File"), ICONRES("runf"),
                                 WingHexPy::runPyFile);
+    PluginMenuAddItemIconLamba(menu, tr("Database"), ICONRES("pydb"), [=] {
+      ScriptCenterWindow d;
+      d.exec();
+    });
+    auto m = new QMenu;
+    m->setTitle(tr("Script"));
+    m->setIcon(ICONRES("py"));
+    smanager->loadMenu(m);
+    menu->addMenu(m);
   }
   PluginMenuInitEnd();
 
@@ -71,6 +83,22 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
     PluginToolBarAddLamba(
         tb, ICONRES("pys"), [=] { ScriptWindow::instance()->show(); },
         tr("ScriptWindow"));
+    PluginToolBarAddLamba(
+        tb, ICONRES("pydb"),
+        [=] {
+          ScriptCenterWindow d;
+          d.exec();
+        },
+        tr("Database"));
+
+    auto m = new QMenu;
+    smanager->loadMenu(m);
+    auto tbtn = new QToolButton;
+    tbtn->setIcon(ICONRES("py"));
+    tbtn->setMenu(m);
+    tbtn->setPopupMode(QToolButton::ToolButtonPopupMode::InstantPopup);
+    tb->addWidget(tbtn);
+
     tb->addSeparator();
     PluginToolBarAddAction(tb, ICONRES("runf"), WingHexPy::runPyFile,
                            tr("Run File"));

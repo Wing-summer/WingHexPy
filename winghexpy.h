@@ -4,6 +4,7 @@
 #include "../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
 #include "PythonQt/gui/PythonQtScriptingConsole.h"
 #include "plginterface.h"
+#include "scriptmanager.h"
 #include <Python.h>
 #include <QListWidget>
 #include <QTableWidget>
@@ -49,6 +50,7 @@ private:
   QToolBar *tb;
   QDockWidget *dw;
   PythonQtScriptingConsole *txt;
+  ScriptManager *smanager;
 
 private:
   QDockWidget *dlist, *dtree, *dtable, *dtxt;

@@ -40,7 +40,9 @@ SOURCES += \
     linebar.cpp \
     replacebar.cpp \
     aboutsoftwaredialog.cpp \
-    sponsordialog.cpp
+    sponsordialog.cpp \
+    scriptmanager.cpp \
+    scriptcenterwindow.cpp
 
 HEADERS += \
     winghexpy.h \
@@ -88,12 +90,15 @@ HEADERS += \
     linebar.h \
     replacebar.h \
     aboutsoftwaredialog.h \
-    sponsordialog.h
+    sponsordialog.h \
+    scriptmanager.h \
+    scriptcenterwindow.h
 
 DISTFILES += WingHexPy.json \ 
     img/infotable.png \
     img/infotree.png \
-    img/infotxt.png
+    img/infotxt.png \
+    img/pydb.png
 
 TRANSLATIONS += \
     $$PWD/WingHexPy.ts

@@ -38,5 +38,7 @@
         <file>img/unsaved.png</file>
         <file>img/saved.png</file>
         <file>img/readonly.png</file>
+        <file>img/pydb.png</file>
+        <file>img/py.png</file>
     </qresource>
 </RCC>
