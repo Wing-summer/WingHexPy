@@ -92,7 +92,8 @@ HEADERS += \
     aboutsoftwaredialog.h \
     sponsordialog.h \
     scriptmanager.h \
-    scriptcenterwindow.h
+    scriptcenterwindow.h \
+    PythonQt/PythonQt_QtAll.h
 
 DISTFILES += WingHexPy.json \ 
     img/infotable.png \
@@ -104,7 +105,8 @@ DISTFILES += WingHexPy.json \
 TRANSLATIONS += \
     $$PWD/WingHexPy.ts
 
-LIBS += $$PWD/PythonQt/libPythonQt-Qt5-Python3.7.a
+LIBS += $$PWD/PythonQt/libPythonQt-Qt5-Python3.7.a \
+ $$PWD/PythonQt/libPythonQt_QtAll-Qt5-Python3.7.a
 
 DEFINES += PYTHONQT_CATCH_ALL_EXCEPTIONS
 
