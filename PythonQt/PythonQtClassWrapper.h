@@ -1,5 +1,5 @@
-#ifndef _PYTHONQTCLASSWRAPPER_H
-#define _PYTHONQTCLASSWRAPPER_H
+#ifndef PYTHONQTCLASSWRAPPER_H
+#define PYTHONQTCLASSWRAPPER_H
 
 /*
  *
@@ -46,10 +46,10 @@
 
 #include "PythonQtSystem.h"
 
-#include "structmember.h"
-#include "methodobject.h"
 #include "compile.h"
 #include "eval.h"
+#include "methodobject.h"
+#include "structmember.h"
 #include <QString>
 
 class PythonQtClassInfo;
@@ -67,12 +67,12 @@ typedef struct {
   PyHeapTypeObject _base;
 
   //! the additional class information that PythonQt stores for the CPP class
-  PythonQtClassInfo* _classInfo;
+  PythonQtClassInfo *_classInfo;
 
   //! get the class info
-  PythonQtClassInfo* classInfo() { return _classInfo; }
+  PythonQtClassInfo *classInfo() { return _classInfo; }
 
-  PythonQtDynamicClassInfo* _dynamicClassInfo;
+  PythonQtDynamicClassInfo *_dynamicClassInfo;
 
 } PythonQtClassWrapper;
 

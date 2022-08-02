@@ -6,6 +6,8 @@
 #include "../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
 #include "PythonQt/PythonQt.h"
 #include "PythonQt/gui/PythonQtScriptingConsole.h"
+#include <QApplication>
+#include <QClipboard>
 #include <QListWidget>
 #include <QMutex>
 #include <QObject>
@@ -72,6 +74,11 @@ public slots:
   void errPrint(QString message) { inter->log(ERRLOG(message)); }
   void infoPrint(QString message) { inter->log(INFOLOG(message)); }
   void warnPrint(QString message) { inter->log(WARNLOG(message)); }
+
+  void copy2Clipboard(QString content) {
+    QApplication::clipboard()->setText(content);
+  }
+  QString getClipboardText() { return QApplication::clipboard()->text(); }
 
 private:
   PlgInterface *inter;
