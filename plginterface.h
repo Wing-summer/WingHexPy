@@ -34,6 +34,8 @@ public:
   bool RunPyText(QString content);
   bool requestControl(int timeout = 1500);
   bool requestRelease();
+  bool hasControl();
+  void toast(QIcon icon, QString message);
 
   static PlgInterface *instance();
 private slots:
@@ -60,6 +62,11 @@ public slots:
     return inter->requestControl(timeout);
   }
   bool requestRelease() { return inter->requestRelease(); }
+  bool hasControl() { return inter->hasControl(); }
+  void toast(QIcon icon, QString message) { inter->toast(icon, message); }
+  void toast(QString message) {
+    inter->toast(QIcon(":/img/icon.png"), message);
+  }
 
   void print(QString message) { inter->log(message); }
   void errPrint(QString message) { inter->log(ERRLOG(message)); }

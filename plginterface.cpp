@@ -81,6 +81,12 @@ bool PlgInterface::requestControl(int timeout) {
 
 bool PlgInterface::requestRelease() { return plg->requestRelease(); }
 
+bool PlgInterface::hasControl() { return plg->hasControl(); }
+
+void PlgInterface::toast(QIcon icon, QString message) {
+  return plg->toast(icon, message);
+}
+
 bool PlgInterface::RunPyText(QString content) {
   if (mutex.tryLock()) {
     auto cur = console->textCursor();
