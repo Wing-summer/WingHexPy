@@ -93,7 +93,8 @@ HEADERS += \
     sponsordialog.h \
     scriptmanager.h \
     scriptcenterwindow.h \
-    PythonQt/PythonQt_QtAll.h
+    PythonQt/PythonQt_QtAll.h \
+    iwingpluginstructwrapper.h
 
 DISTFILES += WingHexPy.json \ 
     img/infotable.png \

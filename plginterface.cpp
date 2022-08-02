@@ -1,6 +1,7 @@
 #include "plginterface.h"
 #include "PythonQt/PythonQtCppWrapperFactory.h"
 #include "PythonQt/PythonQt_QtAll.h"
+#include "iwingpluginstructwrapper.h"
 #include <QKeySequence>
 #include <QListWidgetItem>
 #include <QShortcut>
@@ -22,14 +23,15 @@ bool PlgInterface::init() {
                        PythonQtCreateObject<WingPlugin::Controller>);
   py->registerCPPClass("plgservice", nullptr, "wingplg",
                        PythonQtCreateObject<PlgService>);
+  py->addDecorators(new IWingPluginStructWrapper());
 
-  qRegisterMetaType<HexPosition>("hexposition");
-  qRegisterMetaType<BookMark>("bookmark");
-  qRegisterMetaType<ErrFile>("errfile");
-  qRegisterMetaType<FindResult>("findresult");
-  qRegisterMetaType<HexMetadataAbsoluteItem>("absmetadata");
-  qRegisterMetaType<HexMetadataItem>("metadata");
-  qRegisterMetaType<HexLineMetadata>("linematadata");
+  qRegisterMetaType<HexPosition>("HexPosition");
+  qRegisterMetaType<BookMark>("BookMark");
+  qRegisterMetaType<ErrFile>("ErrFile");
+  qRegisterMetaType<FindResult>("FindResult");
+  qRegisterMetaType<HexMetadataAbsoluteItem>("HexMetadataAbsoluteItem");
+  qRegisterMetaType<HexMetadataItem>("HexMetadataItem");
+  qRegisterMetaType<HexLineMetadata>("HexLineMetadata");
 
   mainContext = PythonQt::self()->getMainModule();
   mainContext.addObject("reader", &plg->reader);
