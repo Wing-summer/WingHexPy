@@ -14,7 +14,7 @@ ScriptManager *ScriptManager::instance() {
 }
 
 ScriptManager::ScriptManager(QObject *parent) : QObject(parent) {
-  auto dir = PLUGINDIR + "/winghexpys";
+  auto dir = PLUGINDIR + "/WingHexPyScript";
   QDir pdir(dir);
   if (!pdir.exists()) {
     return;
@@ -23,7 +23,7 @@ ScriptManager::ScriptManager(QObject *parent) : QObject(parent) {
   auto fdirs = pdir.entryInfoList();
   for (auto folder : fdirs) {
     auto na = folder.fileName();
-    if (na == "." || na == "..")
+    if (na == "." || na == ".." || na == ".git")
       continue;
     QDir jdir(folder.filePath());
     QList<ScriptMeta> m;
