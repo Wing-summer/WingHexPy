@@ -27,42 +27,23 @@ ScriptManager::ScriptManager(QObject *parent) : QObject(parent) {
       continue;
     QDir jdir(folder.filePath());
     QList<ScriptMeta> m;
+    jdir.setFilter(QDir::Filter::Files);
     jdir.setNameFilters({"*.json"});
     auto jsons = jdir.entryInfoList();
     if (!jsons.count())
       continue;
     for (auto j : jsons) {
-      QFile f(j.absoluteFilePath());
-      QJsonParseError err;
-      if (!f.open(QFile::ReadOnly))
-        continue;
-      QJsonDocument doc = QJsonDocument::fromJson(f.readAll(), &err);
-      f.close();
-      if (err.error != QJsonParseError::NoError)
-        continue;
-      auto jobj = doc.object();
-      auto n = j.fileName();
-      ScriptMeta meta;
-      auto p = n.lastIndexOf('.');
-      meta.name = n.left(p);
-      meta.filename = folder.absoluteFilePath() + "/" + meta.name + ".py";
-      auto t = jobj.value("author");
-      if (!t.isUndefined() && t.isString()) {
-        meta.author = t.toString();
-      }
-      t = jobj.value("license");
-      if (!t.isUndefined() && t.isString()) {
-        meta.license = t.toString();
-      } else {
-        meta.license = "Unlicense";
-      }
-      t = jobj.value("commnet");
-      if (!t.isUndefined() && t.isString()) {
-        meta.commnet = t.toString();
-      }
-      t = jobj.value("version");
-      meta.version = uint(t.toInt());
-      m.push_back(meta);
+      parseMeta(j, folder.absoluteFilePath(), m);
+    }
+    jdir.setFilter(QDir::Filter::Dirs);
+    jdir.setNameFilters({"*.pak"});
+    auto paks = jdir.entryInfoList();
+    for (auto f : paks) {
+      auto fn = f.absoluteFilePath();
+      QDir dir(fn);
+      auto j = fn.left(fn.length() - 4) + ".json";
+      if (QFile::exists(j))
+        parseMeta(QFileInfo(j), folder.absoluteFilePath(), m);
     }
     m_metas.insert(folder.fileName(), m);
   }
@@ -109,4 +90,39 @@ void ScriptManager::loadTreeWidget(QTreeWidget *tree) {
       i->setData(0, Qt::UserRole, QVariant::fromValue(mitem));
     }
   }
+}
+
+void ScriptManager::parseMeta(QFileInfo fileinfo, QString folder,
+                              QList<ScriptMeta> &m) {
+  QFile f(fileinfo.absoluteFilePath());
+  QJsonParseError err;
+  if (!f.open(QFile::ReadOnly))
+    return;
+  QJsonDocument doc = QJsonDocument::fromJson(f.readAll(), &err);
+  f.close();
+  if (err.error != QJsonParseError::NoError)
+    return;
+  auto jobj = doc.object();
+  auto n = fileinfo.fileName();
+  ScriptMeta meta;
+  auto p = n.lastIndexOf('.');
+  meta.name = n.left(p);
+  meta.filename = folder + "/" + meta.name + ".py";
+  auto t = jobj.value("author");
+  if (!t.isUndefined() && t.isString()) {
+    meta.author = t.toString();
+  }
+  t = jobj.value("license");
+  if (!t.isUndefined() && t.isString()) {
+    meta.license = t.toString();
+  } else {
+    meta.license = "Unlicense";
+  }
+  t = jobj.value("commnet");
+  if (!t.isUndefined() && t.isString()) {
+    meta.commnet = t.toString();
+  }
+  t = jobj.value("version");
+  meta.version = uint(t.toInt());
+  m.push_back(meta);
 }

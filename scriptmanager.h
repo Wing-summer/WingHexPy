@@ -23,6 +23,7 @@ public:
   static ScriptManager *instance();
   void loadMenu(QMenu *menu);
   void loadTreeWidget(QTreeWidget *tree);
+  void parseMeta(QFileInfo fileinfo, QString folder, QList<ScriptMeta> &m);
   static ScriptManager *m_instance;
 
 private:

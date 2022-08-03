@@ -1,4 +1,4 @@
-/*
+﻿/*
  *
  *  Copyright (C) 2010 MeVis Medical Solutions AG All Rights Reserved.
  *
@@ -74,6 +74,8 @@ PythonQtScriptingConsole::PythonQtScriptingConsole(
                    SLOT(insertCompletion(const QString &)));
 
   clear();
+  setUndoRedoEnabled(false);
+  setAcceptRichText(false);
 
   connect(PythonQt::self(), SIGNAL(pythonStdOut(const QString &)), this,
           SLOT(stdOut(const QString &)));
