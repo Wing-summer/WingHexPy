@@ -172,7 +172,8 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
   _title->setSwitchThemeMenuVisible(false);
   _title->setQuitMenuVisible(false);
 
-  PluginToolBarInitBegin(toolbar, "") {
+  PluginToolBarInitBegin(toolbar, "", "") {
+    toolbar->toggleViewAction()->setVisible(false);
     PluginToolBarAddAction(toolbar, ICONRES("new"), ScriptWindow::on_new,
                            tr("New"));
     PluginToolBarAddAction(toolbar, ICONRES("open"), ScriptWindow::on_open,

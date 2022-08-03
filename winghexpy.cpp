@@ -80,7 +80,7 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
 
   plgint->initInfo(infolist, infotree, infotable, infotxt);
 
-  PluginToolBarInitBegin(tb, "WingHexPy") {
+  PluginToolBarInitBegin(tb, "WingHexPy", "WingHexPy") {
     PluginToolBarAddLamba(
         tb, ICONRES("pys"), [=] { ScriptWindow::instance()->show(); },
         tr("ScriptWindow"));
