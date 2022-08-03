@@ -27,23 +27,17 @@ ScriptManager::ScriptManager(QObject *parent) : QObject(parent) {
       continue;
     QDir jdir(folder.filePath());
     QList<ScriptMeta> m;
-    jdir.setFilter(QDir::Filter::Files);
-    jdir.setNameFilters({"*.json"});
-    auto jsons = jdir.entryInfoList();
-    if (!jsons.count())
-      continue;
-    for (auto j : jsons) {
-      parseMeta(j, folder.absoluteFilePath(), m);
-    }
     jdir.setFilter(QDir::Filter::Dirs);
-    jdir.setNameFilters({"*.pak"});
     auto paks = jdir.entryInfoList();
     for (auto f : paks) {
+      auto na = f.fileName();
+      if (na == "." || na == "..")
+        continue;
       auto fn = f.absoluteFilePath();
       QDir dir(fn);
-      auto j = fn.left(fn.length() - 4) + ".json";
+      auto j = fn + "/" + f.fileName() + ".json";
       if (QFile::exists(j))
-        parseMeta(QFileInfo(j), folder.absoluteFilePath(), m);
+        parseMeta(QFileInfo(j), fn, m);
     }
     m_metas.insert(folder.fileName(), m);
   }
