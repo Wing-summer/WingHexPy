@@ -155,7 +155,7 @@ PythonQt is distributed under the LGPL 2.1 license.
 
 * GitLink : https://www.gitlink.org.cn/wingsummer/WingHexPy
 * Gitea : https://code.gitlink.org.cn/wingsummer/WingHexPy
-* Gitee : https://gitee.com/wingsummer/wing-hex-py
+* Gitee : https://gitee.com/wing-cloud/wing-hex-py
 * Github : https://github.com/Wing-summer/WingHexPy
 
 ## WIKI
