@@ -19,6 +19,8 @@
 #define ERRLOG(msg) "<font color=\"red\">" + msg + "</font>"
 #define WARNLOG(msg) "<font color=\"gold\">" + msg + "</font>"
 
+#define WingHexPyVersion 5
+
 class PlgInterface : public QObject {
   Q_OBJECT
 public:
@@ -79,6 +81,8 @@ public slots:
     QApplication::clipboard()->setText(content);
   }
   QString getClipboardText() { return QApplication::clipboard()->text(); }
+
+  int version() { return WingHexPyVersion; }
 
 private:
   PlgInterface *inter;
