@@ -3,7 +3,7 @@
 
 #define PY_SSIZE_T_CLEAN
 
-#include "../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
+#include "../../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
 #include "PythonQt/PythonQt.h"
 #include "PythonQt/gui/PythonQtScriptingConsole.h"
 #include <QApplication>

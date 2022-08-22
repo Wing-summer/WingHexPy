@@ -47,7 +47,6 @@ SOURCES += \
 HEADERS += \
     winghexpy.h \
     plginterface.h\
-    ../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h \
     QCodeEditor/QCodeEditor.hpp \
     QCodeEditor/QFramedTextAttribute.hpp \
     QCodeEditor/QLineNumberArea.hpp \
@@ -57,6 +56,7 @@ HEADERS += \
     QCodeEditor/QHighlightBlockRule.hpp \
     QCodeEditor/QHighlightRule.hpp \
     QCodeEditor/QLanguage.hpp \
+    ../../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h \
     scriptwindow.h \
     recentfilemanager.h \
     PythonQt/PythonQt.h \

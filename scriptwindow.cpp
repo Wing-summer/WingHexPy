@@ -1,5 +1,5 @@
 ﻿#include "scriptwindow.h"
-#include "../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
+#include "../../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
 #include "QCodeEditor/QPythonHighlighter.hpp"
 #include "aboutsoftwaredialog.h"
 #include "plginterface.h"
@@ -41,7 +41,7 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
 
   m_styles[0] = QSyntaxStyle::defaultStyle();
   auto darkstyle = new QSyntaxStyle(this);
-  QFile file(":/drakula.xml");
+  QFile file(":/WingHexPy/drakula.xml");
   if (file.open(QFile::ReadOnly)) {
     darkstyle->load(file.readAll());
     file.close();
@@ -221,7 +221,7 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
 
   status = new DStatusBar(this);
 
-#define LoadPixMap(Var, Icon) Var.load(":/images/" Icon ".png");
+#define LoadPixMap(Var, Icon) Var.load(":/WingHexPy/images/" Icon ".png");
 
   DLabel *l;
 

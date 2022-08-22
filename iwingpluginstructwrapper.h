@@ -1,7 +1,7 @@
 #ifndef IWINGPLUGINSTRUCTWRAPPER_H
 #define IWINGPLUGINSTRUCTWRAPPER_H
 
-#include "../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
+#include "../../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
 #include <QObject>
 
 class IWingPluginStructWrapper : public QObject {
