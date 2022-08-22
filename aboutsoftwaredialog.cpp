@@ -6,7 +6,7 @@
 AboutSoftwareDialog::AboutSoftwareDialog(DMainWindow *parent)
     : DDialog(parent) {
   QPixmap pic;
-  pic.load(":/img/author.jpg");
+  pic.load(":/WingHexPy/img/author.jpg");
   auto l = new DLabel(this);
   l->setFixedSize(100, 100);
   l->setScaledContents(true);
@@ -14,7 +14,7 @@ AboutSoftwareDialog::AboutSoftwareDialog(DMainWindow *parent)
   addContent(l, Qt::AlignHCenter);
   addSpacing(10);
   auto b = new DTextBrowser(this);
-  b->setSearchPaths(QStringList({":", ":/img"}));
+  b->setSearchPaths(QStringList({":/WingHexPy", ":/WingHexPy/img"}));
   b->setSource(QUrl("README.md"), QTextDocument::MarkdownResource);
 
   b->setFixedSize(800, 500);

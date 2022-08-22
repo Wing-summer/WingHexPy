@@ -8,7 +8,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-#define ICONRES(name) QIcon(":/img/" name ".png")
+#define ICONRES(name) QIcon(":/WingHexPy/img/" name ".png")
 
 WingHexPy::WingHexPy(QObject *parent) { Q_UNUSED(parent) }
 

@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/WingHexPy">
         <file alias="python.xml">QCodeEditor/python.xml</file>
         <file alias="default_style.xml">QCodeEditor/default_style.xml</file>
         <file>img/pys.png</file>

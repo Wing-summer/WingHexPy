@@ -77,10 +77,10 @@ void ScriptManager::loadTreeWidget(QTreeWidget *tree) {
   for (; k != ke; k++) {
     auto n = *k;
     auto p = new QTreeWidgetItem(tree, {k->first});
-    p->setIcon(0, QIcon(":/img/pydb.png"));
+    p->setIcon(0, QIcon(":/WingHexPy/img/pydb.png"));
     for (auto mitem : n.second) {
       auto i = new QTreeWidgetItem(p, {mitem.name});
-      i->setIcon(0, QIcon(":/img/py.png"));
+      i->setIcon(0, QIcon(":/WingHexPy/img/py.png"));
       i->setData(0, Qt::UserRole, QVariant::fromValue(mitem));
     }
   }

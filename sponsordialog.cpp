@@ -8,7 +8,7 @@ SponsorDialog::SponsorDialog(DMainWindow *parent) : DDialog(parent) {
   addSpacing(5);
   addContent(new DLabel(tr("ThanksForSponsor"), this), Qt::AlignHCenter);
   addSpacing(5);
-  QPixmap sponsor(":/sponsor.png");
+  QPixmap sponsor(":/WingHexPy/sponsor.png");
 
   auto l = new DLabel(this);
   l->setPixmap(sponsor);

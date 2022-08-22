@@ -6,7 +6,7 @@
 #include <QFile>
 #include <QSettings>
 
-#define ICONRES(name) QIcon(":/img/" name ".png")
+#define ICONRES(name) QIcon(":/WingHexPy/img/" name ".png")
 
 RecentFileManager::RecentFileManager(DMenu *menu, DMainWindow *parent)
     : QObject(parent), m_menu(menu), m_parent(parent) {}

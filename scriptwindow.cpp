@@ -16,7 +16,7 @@
 #include <QShortcut>
 #include <QTextDocumentFragment>
 
-#define ICONRES(name) QIcon(":/img/" name ".png")
+#define ICONRES(name) QIcon(":/WingHexPy/img/" name ".png")
 
 ScriptWindow *ScriptWindow::m_instance = nullptr;
 
