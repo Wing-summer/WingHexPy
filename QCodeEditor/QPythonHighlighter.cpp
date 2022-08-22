@@ -15,7 +15,7 @@ QPythonHighlighter::QPythonHighlighter(QTextDocument *document)
           R"(\b([A-Za-z0-9_]+(?:\.))*([A-Za-z0-9_]+)(?=\())")),
       m_defTypePattern(QRegularExpression(
           R"(\b([A-Za-z0-9_]+)\s+[A-Za-z]{1}[A-Za-z0-9_]+\s*[;=])")) {
-  QFile fl(":/python.xml");
+  QFile fl(":/WingHexPy/python.xml");
 
   if (!fl.open(QIODevice::ReadOnly)) {
     return;
