@@ -9,6 +9,7 @@
 #include <QMessageBox>
 
 #define ICONRES(name) QIcon(":/WingHexPy/img/" name ".png")
+#define HOSTICONRES(name) QIcon(HOSTRESPIMG(name))
 
 WingHexPy::WingHexPy(QObject *parent) { Q_UNUSED(parent) }
 
@@ -133,14 +134,14 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
         tr("InfoTxt"));
     tb->addSeparator();
     PluginToolBarAddLamba(
-        tb, ICONRES("author"),
+        tb, HOSTICONRES("author"),
         [=] {
           AboutSoftwareDialog d;
           d.exec();
         },
         tr("About"));
     PluginToolBarAddLamba(
-        tb, ICONRES("wiki"),
+        tb, HOSTICONRES("wiki"),
         [=] {
           QDesktopServices::openUrl(
               QUrl("https://code.gitlink.org.cn/wingsummer/WingHexPy/wiki/"
@@ -148,7 +149,7 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
         },
         tr("Wiki"));
     PluginToolBarAddLamba(
-        tb, ICONRES("sponsor"),
+        tb, HOSTICONRES("sponsor"),
         [=] {
           SponsorDialog d;
           d.exec();

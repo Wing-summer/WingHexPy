@@ -17,6 +17,7 @@
 #include <QTextDocumentFragment>
 
 #define ICONRES(name) QIcon(":/WingHexPy/img/" name ".png")
+#define HOSTICONRES(name) QIcon(HOSTRESPIMG(name))
 
 ScriptWindow *ScriptWindow::m_instance = nullptr;
 
@@ -71,20 +72,20 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
     Q_UNUSED(a);
     QMenu *m;
     PluginMenuInitBegin(m, tr("File")) {
-      m->setIcon(ICONRES("file"));
-      PluginMenuAddItemIconAction(m, tr("New"), ICONRES("new"),
+      m->setIcon(HOSTICONRES("file"));
+      PluginMenuAddItemIconAction(m, tr("New"), HOSTICONRES("new"),
                                   ScriptWindow::on_new);
       a->setShortcut(QKeySequence::New);
       a->setShortcutVisibleInContextMenu(true);
-      PluginMenuAddItemIconAction(m, tr("Open"), ICONRES("open"),
+      PluginMenuAddItemIconAction(m, tr("Open"), HOSTICONRES("open"),
                                   ScriptWindow::on_open);
       a->setShortcut(QKeySequence::Open);
       a->setShortcutVisibleInContextMenu(true);
-      PluginMenuAddItemIconAction(m, tr("Save"), ICONRES("save"),
+      PluginMenuAddItemIconAction(m, tr("Save"), HOSTICONRES("save"),
                                   ScriptWindow::on_save);
       a->setShortcut(QKeySequence::Save);
       a->setShortcutVisibleInContextMenu(true);
-      PluginMenuAddItemIconAction(m, tr("SaveAs"), ICONRES("saveas"),
+      PluginMenuAddItemIconAction(m, tr("SaveAs"), HOSTICONRES("saveas"),
                                   ScriptWindow::on_saveas);
       a->setShortcut(QKeySequence::SaveAs);
       a->setShortcutVisibleInContextMenu(true);
@@ -93,41 +94,41 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
       recentmanager = new RecentFileManager(rm, this);
       recentmanager->apply();
       m->addMenu(rm);
-      PluginMenuAddItemIconAction(m, tr("Close"), ICONRES("close"),
+      PluginMenuAddItemIconAction(m, tr("Close"), HOSTICONRES("closefile"),
                                   ScriptWindow::on_close);
     }
     PluginMenuInitEnd();
     menu->addMenu(m);
 
     PluginMenuInitBegin(m, tr("Edit")) {
-      m->setIcon(ICONRES("edit"));
-      PluginMenuAddItemIconAction(m, tr("Undo"), ICONRES("undo"),
+      m->setIcon(HOSTICONRES("edit"));
+      PluginMenuAddItemIconAction(m, tr("Undo"), HOSTICONRES("undo"),
                                   ScriptWindow::on_undo);
       a->setShortcut(QKeySequence::Undo);
       a->setShortcutVisibleInContextMenu(true);
       a->setEnabled(false);
       mundo = a;
-      PluginMenuAddItemIconAction(m, tr("Redo"), ICONRES("redo"),
+      PluginMenuAddItemIconAction(m, tr("Redo"), HOSTICONRES("redo"),
                                   ScriptWindow::on_redo);
       a->setShortcut(QKeySequence::Redo);
       a->setShortcutVisibleInContextMenu(true);
       a->setEnabled(false);
       mredo = a;
       m->addSeparator();
-      PluginMenuAddItemIconAction(m, tr("Cut"), ICONRES("cut"),
+      PluginMenuAddItemIconAction(m, tr("Cut"), HOSTICONRES("cut"),
                                   ScriptWindow::on_cut);
       a->setShortcut(QKeySequence::Cut);
       a->setShortcutVisibleInContextMenu(true);
-      PluginMenuAddItemIconAction(m, tr("Copy"), ICONRES("copy"),
+      PluginMenuAddItemIconAction(m, tr("Copy"), HOSTICONRES("copy"),
                                   ScriptWindow::on_copy);
       a->setShortcut(QKeySequence::Copy);
       a->setShortcutVisibleInContextMenu(true);
-      PluginMenuAddItemIconAction(m, tr("Paste"), ICONRES("paste"),
+      PluginMenuAddItemIconAction(m, tr("Paste"), HOSTICONRES("paste"),
                                   ScriptWindow::on_paste);
       a->setShortcut(QKeySequence::Paste);
       a->setShortcutVisibleInContextMenu(true);
       m->addSeparator();
-      PluginMenuAddItemIconAction(m, tr("Find"), ICONRES("find"),
+      PluginMenuAddItemIconAction(m, tr("Find"), HOSTICONRES("find"),
                                   ScriptWindow::on_find);
       a->setShortcut(QKeySequence::Find);
       a->setShortcutVisibleInContextMenu(true);
@@ -135,7 +136,7 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
                                   ScriptWindow::on_replace);
       a->setShortcut(QKeySequence::Replace);
       a->setShortcutVisibleInContextMenu(true);
-      PluginMenuAddItemIconAction(m, tr("Goto"), ICONRES("jmp"),
+      PluginMenuAddItemIconAction(m, tr("Goto"), HOSTICONRES("jmp"),
                                   ScriptWindow::on_jmp);
       a->setShortcut(scgoto);
       a->setShortcutVisibleInContextMenu(true);
@@ -156,10 +157,10 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
     PluginMenuInitEnd();
     menu->addMenu(m);
     PluginMenuInitBegin(m, tr("About")) {
-      m->setIcon(ICONRES("author"));
-      PluginMenuAddItemIconAction(m, tr("AboutPlugin"), ICONRES("soft"),
+      m->setIcon(HOSTICONRES("author"));
+      PluginMenuAddItemIconAction(m, tr("AboutPlugin"), HOSTICONRES("soft"),
                                   ScriptWindow::on_about);
-      PluginMenuAddItemIconAction(m, tr("Sponsor"), ICONRES("sponsor"),
+      PluginMenuAddItemIconAction(m, tr("Sponsor"), HOSTICONRES("sponsor"),
                                   ScriptWindow::on_sponsor);
     }
     PluginMenuInitEnd();
@@ -174,35 +175,35 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
 
   PluginToolBarInitBegin(toolbar, "", "") {
     toolbar->toggleViewAction()->setVisible(false);
-    PluginToolBarAddAction(toolbar, ICONRES("new"), ScriptWindow::on_new,
+    PluginToolBarAddAction(toolbar, HOSTICONRES("new"), ScriptWindow::on_new,
                            tr("New"));
-    PluginToolBarAddAction(toolbar, ICONRES("open"), ScriptWindow::on_open,
+    PluginToolBarAddAction(toolbar, HOSTICONRES("open"), ScriptWindow::on_open,
                            tr("Open"));
-    PluginToolBarAddAction(toolbar, ICONRES("save"), ScriptWindow::on_save,
+    PluginToolBarAddAction(toolbar, HOSTICONRES("save"), ScriptWindow::on_save,
                            tr("Save"));
-    PluginToolBarAddAction(toolbar, ICONRES("saveas"), ScriptWindow::on_saveas,
-                           tr("SaveAs"));
+    PluginToolBarAddAction(toolbar, HOSTICONRES("saveas"),
+                           ScriptWindow::on_saveas, tr("SaveAs"));
     toolbar->addSeparator();
-    PluginToolBarAddAction(toolbar, ICONRES("undo"), ScriptWindow::on_undo,
+    PluginToolBarAddAction(toolbar, HOSTICONRES("undo"), ScriptWindow::on_undo,
                            tr("Undo"));
     a->setEnabled(false);
     aundo = a;
-    PluginToolBarAddAction(toolbar, ICONRES("redo"), ScriptWindow::on_redo,
+    PluginToolBarAddAction(toolbar, HOSTICONRES("redo"), ScriptWindow::on_redo,
                            tr("Redo"));
     a->setEnabled(false);
     aredo = a;
-    PluginToolBarAddAction(toolbar, ICONRES("cut"), ScriptWindow::on_cut,
+    PluginToolBarAddAction(toolbar, HOSTICONRES("cut"), ScriptWindow::on_cut,
                            tr("Cut"));
-    PluginToolBarAddAction(toolbar, ICONRES("copy"), ScriptWindow::on_copy,
+    PluginToolBarAddAction(toolbar, HOSTICONRES("copy"), ScriptWindow::on_copy,
                            tr("Copy"));
-    PluginToolBarAddAction(toolbar, ICONRES("paste"), ScriptWindow::on_paste,
-                           tr("Paste"));
+    PluginToolBarAddAction(toolbar, HOSTICONRES("paste"),
+                           ScriptWindow::on_paste, tr("Paste"));
     toolbar->addSeparator();
-    PluginToolBarAddAction(toolbar, ICONRES("find"), ScriptWindow::on_find,
+    PluginToolBarAddAction(toolbar, HOSTICONRES("find"), ScriptWindow::on_find,
                            tr("Find"));
     PluginToolBarAddAction(toolbar, ICONRES("replace"),
                            ScriptWindow::on_replace, tr("Replace"));
-    PluginToolBarAddAction(toolbar, ICONRES("jmp"), ScriptWindow::on_jmp,
+    PluginToolBarAddAction(toolbar, HOSTICONRES("jmp"), ScriptWindow::on_jmp,
                            tr("Goto"));
     toolbar->addSeparator();
     PluginToolBarAddAction(toolbar, ICONRES("run"), ScriptWindow::on_run,
@@ -210,9 +211,9 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
     PluginToolBarAddAction(toolbar, ICONRES("runf"), ScriptWindow::on_runfile,
                            tr("RunFile"));
     toolbar->addSeparator();
-    PluginToolBarAddAction(toolbar, ICONRES("soft"), ScriptWindow::on_about,
+    PluginToolBarAddAction(toolbar, HOSTICONRES("soft"), ScriptWindow::on_about,
                            tr("AboutPlugin"));
-    PluginToolBarAddAction(toolbar, ICONRES("sponsor"),
+    PluginToolBarAddAction(toolbar, HOSTICONRES("sponsor"),
                            ScriptWindow::on_sponsor, tr("Sponsor"));
   }
   PluginToolBarInitEnd();
@@ -221,7 +222,7 @@ ScriptWindow::ScriptWindow(DMainWindow *parent) : DMainWindow(parent) {
 
   status = new DStatusBar(this);
 
-#define LoadPixMap(Var, Icon) Var.load(":/WingHexPy/images/" Icon ".png");
+#define LoadPixMap(Var, Icon) Var.load(HOSTRESPIMG(Icon));
 
   DLabel *l;
 
@@ -466,7 +467,7 @@ void ScriptWindow::on_open() {
       f.close();
       setSaved(true);
     } else {
-      DMessageManager::instance()->sendMessage(this, ICONRES("open"),
+      DMessageManager::instance()->sendMessage(this, HOSTICONRES("open"),
                                                tr("OpenFail"));
     }
   }
@@ -483,7 +484,7 @@ void ScriptWindow::on_save() {
     f.close();
     setSaved(true);
   } else {
-    DMessageManager::instance()->sendMessage(this, ICONRES("save"),
+    DMessageManager::instance()->sendMessage(this, HOSTICONRES("save"),
                                              tr("SaveFail"));
   }
 }
@@ -501,7 +502,7 @@ void ScriptWindow::on_saveas() {
     setSaved(true);
     iReadWrite->setPixmap(infoWriteable);
   } else {
-    DMessageManager::instance()->sendMessage(this, ICONRES("saveas"),
+    DMessageManager::instance()->sendMessage(this, HOSTICONRES("saveas"),
                                              tr("SaveAsFail"));
   }
 }

@@ -1,6 +1,7 @@
 #ifndef ABOUTSOFTWAREDIALOG_H
 #define ABOUTSOFTWAREDIALOG_H
 
+#include "../../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
 #include <DDialog>
 #include <DMainWindow>
 #include <QObject>
@@ -11,10 +12,6 @@ class AboutSoftwareDialog : public DDialog {
   Q_OBJECT
 public:
   explicit AboutSoftwareDialog(DMainWindow *parent = nullptr);
-
-signals:
-
-public slots:
 };
 
 #endif // ABOUTSOFTWAREDIALOG_H

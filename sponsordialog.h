@@ -1,6 +1,7 @@
 #ifndef SPONSORDIALOG_H
 #define SPONSORDIALOG_H
 
+#include "../../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
 #include <DDialog>
 #include <DMainWindow>
 #include <QObject>

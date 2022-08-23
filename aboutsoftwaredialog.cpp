@@ -6,7 +6,7 @@
 AboutSoftwareDialog::AboutSoftwareDialog(DMainWindow *parent)
     : DDialog(parent) {
   QPixmap pic;
-  pic.load(":/WingHexPy/img/author.jpg");
+  pic.load(HOSTAUTHORPIMG);
   auto l = new DLabel(this);
   l->setFixedSize(100, 100);
   l->setScaledContents(true);
