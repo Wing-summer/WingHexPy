@@ -1,9 +1,7 @@
 ﻿#include "scriptwindow.h"
 #include "../../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
 #include "QCodeEditor/QPythonHighlighter.hpp"
-#include "aboutsoftwaredialog.h"
 #include "plginterface.h"
-#include "sponsordialog.h"
 #include <DFileDialog>
 #include <DInputDialog>
 #include <DMessageManager>
@@ -568,11 +566,11 @@ void ScriptWindow::on_jmp() {
 }
 
 void ScriptWindow::on_about() {
-  AboutSoftwareDialog d;
-  d.exec();
+  emit sigAbout();
+  raise();
 }
 
 void ScriptWindow::on_sponsor() {
-  SponsorDialog d;
-  d.exec();
+  emit sigSponsor();
+  raise();
 }

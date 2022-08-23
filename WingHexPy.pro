@@ -39,8 +39,6 @@ SOURCES += \
     findbar.cpp \
     linebar.cpp \
     replacebar.cpp \
-    aboutsoftwaredialog.cpp \
-    sponsordialog.cpp \
     scriptmanager.cpp \
     scriptcenterwindow.cpp
 
@@ -89,8 +87,6 @@ HEADERS += \
     findbar.h \
     linebar.h \
     replacebar.h \
-    aboutsoftwaredialog.h \
-    sponsordialog.h \
     scriptmanager.h \
     scriptcenterwindow.h \
     PythonQt/PythonQt_QtAll.h \

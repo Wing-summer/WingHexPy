@@ -39,6 +39,8 @@ public:
 
 public:
   void log(QString message);
+  void on_about();
+  void on_sponsor();
 
 public:
   void RunPyFile(QString filename);

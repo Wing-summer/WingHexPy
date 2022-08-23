@@ -49,6 +49,10 @@ private:
 
   void setSaved(bool b);
 
+signals:
+  void sigAbout();
+  void sigSponsor();
+
 private:
   QCodeEditor *editor;
   static ScriptWindow *m_instance;

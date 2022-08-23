@@ -1,8 +1,6 @@
 #include "winghexpy.h"
-#include "aboutsoftwaredialog.h"
 #include "scriptcenterwindow.h"
 #include "scriptwindow.h"
-#include "sponsordialog.h"
 #include <QApplication>
 #include <QDesktopServices>
 #include <QFileDialog>
@@ -26,8 +24,14 @@ QString WingHexPy::signature() { return WINGSUMMER; }
 bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
   Q_UNUSED(loadedplugin);
 
-  auto translator = new QTranslator(this);
+  if (SDKVERSION < 8) {
+    QMessageBox::critical(nullptr, "Error",
+                          "UnSupported Plugin System Version!",
+                          QMessageBox::Ok);
+    return false;
+  }
 
+  auto translator = new QTranslator(this);
   auto s = GETPLUGINQM("WingHexPy.qm");
   if (!translator->load(s) || !QApplication::installTranslator(translator)) {
     QMessageBox::critical(nullptr, "Error", "Error Loading Translation File!",
@@ -81,6 +85,10 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
 
   plgint->initInfo(infolist, infotree, infotable, infotxt);
 
+  auto sw = ScriptWindow::instance();
+  connect(sw, &ScriptWindow::sigAbout, this, &WingHexPy::on_about);
+  connect(sw, &ScriptWindow::sigSponsor, this, &WingHexPy::on_sponsor);
+
   PluginToolBarInitBegin(tb, "WingHexPy", "WingHexPy") {
     PluginToolBarAddLamba(
         tb, ICONRES("pys"), [=] { ScriptWindow::instance()->show(); },
@@ -133,13 +141,8 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
         },
         tr("InfoTxt"));
     tb->addSeparator();
-    PluginToolBarAddLamba(
-        tb, HOSTICONRES("author"),
-        [=] {
-          AboutSoftwareDialog d;
-          d.exec();
-        },
-        tr("About"));
+    PluginToolBarAddAction(tb, HOSTICONRES("author"), WingHexPy::on_about,
+                           tr("About"));
     PluginToolBarAddLamba(
         tb, HOSTICONRES("wiki"),
         [=] {
@@ -148,13 +151,8 @@ bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
                    "%E6%95%99%E7%A8%8B"));
         },
         tr("Wiki"));
-    PluginToolBarAddLamba(
-        tb, HOSTICONRES("sponsor"),
-        [=] {
-          SponsorDialog d;
-          d.exec();
-        },
-        tr("Sponsor"));
+    PluginToolBarAddAction(tb, HOSTICONRES("sponsor"), WingHexPy::on_sponsor,
+                           tr("Sponsor"));
   }
   PluginToolBarInitEnd();
 
@@ -205,3 +203,15 @@ void WingHexPy::registerDockWidget(
 QToolBar *WingHexPy::registerToolBar() { return tb; }
 
 void WingHexPy::log(QString message) { txt->consoleMessage(message); }
+
+void WingHexPy::on_about() {
+  auto authord = newAboutDialog(QPixmap(), {":/WingHexPy", ":/WingHexPy/img"});
+  authord->exec();
+  delete authord;
+}
+
+void WingHexPy::on_sponsor() {
+  auto sponsor = newSponsorDialog();
+  sponsor->exec();
+  delete sponsor;
+}
