@@ -28,6 +28,7 @@ public:
   void unload() override;
   QMenu *registerMenu() override;
   QToolBar *registerToolBar() override;
+  Qt::ToolBarArea registerToolBarArea() override;
   void
   registerDockWidget(QMap<QDockWidget *, Qt::DockWidgetArea> &rdw) override;
   QString pluginName() override;

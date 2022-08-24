@@ -202,6 +202,10 @@ void WingHexPy::registerDockWidget(
 
 QToolBar *WingHexPy::registerToolBar() { return tb; }
 
+Qt::ToolBarArea WingHexPy::registerToolBarArea() {
+  return Qt::ToolBarArea::LeftToolBarArea;
+}
+
 void WingHexPy::log(QString message) { txt->consoleMessage(message); }
 
 void WingHexPy::on_about() {
