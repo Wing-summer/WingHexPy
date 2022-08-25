@@ -69,7 +69,7 @@ public slots:
   bool hasControl() { return inter->hasControl(); }
   void toast(QIcon icon, QString message) { inter->toast(icon, message); }
   void toast(QString message) {
-    inter->toast(QIcon(":/img/icon.png"), message);
+    inter->toast(QIcon(":/WingHexPy/img/icon.png"), message);
   }
 
   void print(QString message) { inter->log(message); }
