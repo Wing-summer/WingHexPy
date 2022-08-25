@@ -19,6 +19,8 @@
         <name>or</name>
         <name>and</name>
         <name>enumerate</name>
+        <name>with</name>
+        <name>as</name>
     </section>
     <section name="Namespace">
         <name>WingPlgReader</name>
