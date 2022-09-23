@@ -101,7 +101,7 @@ QSyntaxStyle *QSyntaxStyle::defaultStyle() {
   static QSyntaxStyle style;
 
   if (!style.isLoaded()) {
-    QFile fl(":/default_style.xml");
+    QFile fl(":/WingHexPy/default_style.xml");
 
     if (!fl.open(QIODevice::ReadOnly)) {
       return &style;
