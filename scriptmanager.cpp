@@ -19,20 +19,18 @@ ScriptManager::ScriptManager(QObject *parent) : QObject(parent) {
   if (!pdir.exists()) {
     return;
   }
-  pdir.setFilter(QDir::Filter::Dirs);
+  pdir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
   auto fdirs = pdir.entryInfoList();
   for (auto folder : fdirs) {
     auto na = folder.fileName();
-    if (na == "." || na == ".." || na == ".git")
+    if (na == ".git")
       continue;
     QDir jdir(folder.filePath());
     QList<ScriptMeta> m;
-    jdir.setFilter(QDir::Filter::Dirs);
+    jdir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
     auto paks = jdir.entryInfoList();
     for (auto f : paks) {
       auto na = f.fileName();
-      if (na == "." || na == "..")
-        continue;
       auto fn = f.absoluteFilePath();
       QDir dir(fn);
       auto j = fn + "/" + f.fileName() + ".json";

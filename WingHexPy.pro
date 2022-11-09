@@ -54,7 +54,7 @@ HEADERS += \
     QCodeEditor/QHighlightBlockRule.hpp \
     QCodeEditor/QHighlightRule.hpp \
     QCodeEditor/QLanguage.hpp \
-    ../../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h \
+    ../WingHexExplorer/WingHexExplorer/plugin/iwingplugin.h \
     scriptwindow.h \
     recentfilemanager.h \
     PythonQt/PythonQt.h \

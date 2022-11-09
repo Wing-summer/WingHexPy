@@ -1,7 +1,7 @@
 #ifndef GENERICPLUGIN_H
 #define GENERICPLUGIN_H
 
-#include "../../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
+#include "../WingHexExplorer/WingHexExplorer/plugin/iwingplugin.h"
 #include "PythonQt/gui/PythonQtScriptingConsole.h"
 #include "plginterface.h"
 #include "scriptmanager.h"
