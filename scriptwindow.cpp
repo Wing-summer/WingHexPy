@@ -1,5 +1,5 @@
-﻿#include "scriptwindow.h"
-#include "../../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
+#include "scriptwindow.h"
+#include "../WingHexExplorer/WingHexExplorer/plugin/iwingplugin.h"
 #include "QCodeEditor/QPythonHighlighter.hpp"
 #include "plginterface.h"
 #include <DFileDialog>
@@ -555,7 +555,7 @@ void ScriptWindow::on_replace() {
 void ScriptWindow::on_jmp() {
   auto cur = editor->textCursor();
   auto ok = false;
-  auto pos = DInputDialog::getInt(this, tr("Goto"), tr("Line"), 1, 1,
+  auto pos = QInputDialog::getInt(this, tr("Goto"), tr("Line"), 1, 1,
                                   cur.blockNumber(), 1, &ok);
   if (ok) {
     auto p = editor->document()->findBlockByLineNumber(pos - 1).position();

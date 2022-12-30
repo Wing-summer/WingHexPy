@@ -1,7 +1,7 @@
 #ifndef SCRIPTMANAGER_H
 #define SCRIPTMANAGER_H
 
-#include "../../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
+#include "../WingHexExplorer/WingHexExplorer/plugin/iwingplugin.h"
 #include "plginterface.h"
 #include <QMap>
 #include <QObject>

@@ -1,7 +1,7 @@
 #ifndef IWINGPLUGINSTRUCTWRAPPER_H
 #define IWINGPLUGINSTRUCTWRAPPER_H
 
-#include "../../WingHexExplorer/wing-hex-explorer.sourcecode/WingHexExplorer/plugin/iwingplugin.h"
+#include "../WingHexExplorer/WingHexExplorer/plugin/iwingplugin.h"
 #include <QObject>
 
 class IWingPluginStructWrapper : public QObject {
@@ -86,6 +86,9 @@ public slots:
   QColor foreground(HexMetadataItem *meta) { return meta->foreground; }
   QColor background(HexMetadataItem *meta) { return meta->background; }
   QString comment(HexMetadataItem *meta) { return meta->comment; }
+
+  // ErrFile
+  int value(ErrFile *err) { return int(*err); }
 };
 
 #endif // IWINGPLUGINSTRUCTWRAPPER_H
