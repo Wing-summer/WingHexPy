@@ -59,7 +59,7 @@ PythonQtScriptingConsole *PlgInterface::getScriptingConsole() {
   return console;
 }
 
-bool PlgInterface::RunPyFile(QString filename) {
+bool PlgInterface::RunPyFile(const QString &filename) {
   if (mutex.tryLock()) {
     auto cur = console->textCursor();
     cur.movePosition(QTextCursor::End);
@@ -83,11 +83,19 @@ bool PlgInterface::requestRelease() { return plg->requestRelease(); }
 
 bool PlgInterface::hasControl() { return plg->hasControl(); }
 
-void PlgInterface::toast(QIcon icon, QString message) {
-  return plg->toast(icon, message);
+void PlgInterface::toast(const QIcon &icon, const QString &message) {
+  plg->toast(icon, message);
 }
 
-bool PlgInterface::RunPyText(QString content) {
+void PlgInterface::logWarn(const QString &message) { plg->warn(message); }
+
+void PlgInterface::logError(const QString &message) { plg->error(message); }
+
+void PlgInterface::logInfo(const QString &message) { plg->info(message); }
+
+void PlgInterface::logDebug(const QString &message) { plg->debug(message); }
+
+bool PlgInterface::RunPyText(const QString &content) {
   if (mutex.tryLock()) {
     auto cur = console->textCursor();
     cur.movePosition(QTextCursor::End);

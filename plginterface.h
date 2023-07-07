@@ -34,12 +34,16 @@ public:
   void initInfo(QListWidget *infolist, QTreeWidget *infotree,
                 QTableWidget *infotable, QTextBrowser *infotxt);
   PythonQtScriptingConsole *getScriptingConsole();
-  bool RunPyFile(QString filename);
-  bool RunPyText(QString content);
+  bool RunPyFile(const QString &filename);
+  bool RunPyText(const QString &content);
   bool requestControl(int timeout = 1500);
   bool requestRelease();
   bool hasControl();
-  void toast(QIcon icon, QString message);
+  void toast(const QIcon &icon, const QString &message);
+  void logWarn(const QString &message);
+  void logError(const QString &message);
+  void logInfo(const QString &message);
+  void logDebug(const QString &message);
 
   static PlgInterface *instance();
 private slots:
@@ -67,11 +71,16 @@ public slots:
   }
   bool requestRelease() { return inter->requestRelease(); }
   bool hasControl() { return inter->hasControl(); }
-  void toast(QIcon icon, QString message) { inter->toast(icon, message); }
-  void toast(QString message) {
+  void toast(const QIcon &icon, const QString &message) {
+    inter->toast(icon, message);
+  }
+  void toast(const QString &message) {
     inter->toast(QIcon(":/WingHexPy/img/icon.png"), message);
   }
-
+  void logWarn(const QString &message) { inter->logWarn(message); }
+  void logError(const QString &message) { inter->logError(message); }
+  void logInfo(const QString &message) { inter->logInfo(message); }
+  void logDebug(const QString &message) { inter->logDebug(message); }
   void print(QString message) { inter->log(message); }
   void errPrint(QString message) { inter->log(ERRLOG(message)); }
   void infoPrint(QString message) { inter->log(INFOLOG(message)); }

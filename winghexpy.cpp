@@ -19,7 +19,7 @@ Q_EXPORT_PLUGIN2(WingHexPy, GenericPlugin)
 
 int WingHexPy::sdkVersion() { return SDKVERSION; }
 
-QString WingHexPy::signature() { return WINGSUMMER; }
+const QString WingHexPy::signature() { return WINGSUMMER; }
 
 bool WingHexPy::init(QList<WingPluginInfo> loadedplugin) {
   Q_UNUSED(loadedplugin);
@@ -179,11 +179,11 @@ void WingHexPy::plugin2MessagePipe(WingPluginMessage type,
   Q_UNUSED(msg);
 }
 
-QString WingHexPy::pluginName() { return tr("WingHexPy"); }
+const QString WingHexPy::pluginName() { return tr("WingHexPy"); }
 
-QString WingHexPy::pluginAuthor() { return WINGSUMMER; }
+const QString WingHexPy::pluginAuthor() { return WINGSUMMER; }
 
-QString WingHexPy::pluginComment() {
+const QString WingHexPy::pluginComment() {
   return tr("A useful plugin for python3.7 support.");
 }
 
@@ -192,7 +192,7 @@ uint WingHexPy::pluginVersion() { return 1; }
 QMenu *WingHexPy::registerMenu() { return menu; }
 
 void WingHexPy::registerDockWidget(
-    QMap<QDockWidget *, Qt::DockWidgetArea> &rdw) {
+    QHash<QDockWidget *, Qt::DockWidgetArea> &rdw) {
   rdw.insert(dw, Qt::DockWidgetArea::BottomDockWidgetArea);
   rdw.insert(dtree, Qt::DockWidgetArea::BottomDockWidgetArea);
   rdw.insert(dtable, Qt::DockWidgetArea::BottomDockWidgetArea);

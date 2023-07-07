@@ -30,12 +30,12 @@ public:
   QToolBar *registerToolBar() override;
   Qt::ToolBarArea registerToolBarArea() override;
   void
-  registerDockWidget(QMap<QDockWidget *, Qt::DockWidgetArea> &rdw) override;
-  QString pluginName() override;
-  QString pluginAuthor() override;
+  registerDockWidget(QHash<QDockWidget *, Qt::DockWidgetArea> &rdw) override;
+  const QString pluginName() override;
+  const QString pluginAuthor() override;
   uint pluginVersion() override;
-  QString signature() override;
-  QString pluginComment() override;
+  const QString signature() override;
+  const QString pluginComment() override;
   void plugin2MessagePipe(WingPluginMessage type, QList<QVariant> msg) override;
 
 public:
